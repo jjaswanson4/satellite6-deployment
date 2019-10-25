@@ -1,0 +1,205 @@
+---
+
+satellite_initial_organization: josh
+satellite_initial_location: msp-lab
+satellite_admin_username: admin
+satellite_admin_password: 'changeme'
+
+satellite_manifest_path: 'files/josh-manifest.zip'
+
+satellite_install_repos:
+  - 'rhel-7-server-rpms'
+  - 'rhel-server-rhscl-7-rpms'
+  - 'rhel-7-server-satellite-6.6-rpms'
+  - 'rhel-7-server-satellite-maintenance-6-rpms'
+  - 'rhel-7-server-ansible-2.8-rpms'
+
+satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
+
+satellite_logical_volumes:
+  - name: cache
+    size: 20
+    path: /var/cache/pulp
+  - name: pulp
+    size: 750
+    path: /var/lib/pulp
+  - name: mongodb
+    size: 50
+    path: /var/lib/mongodb
+  - name: qpidd
+    size: 20
+    path: /var/lib/qpidd
+  - name: varlog
+    size: 10
+    path: /var/log
+  - name: pqsql
+    size: 25
+    path: /var/lib/pgsql
+  - name: squid
+    size: 10
+    path: /var/spool/squid
+  - name: usr
+    size: 8
+    path: /usr
+  - name: opt
+    size: 8
+    path: /opt
+  - name: puppetlabs
+    size: 1
+    path: /opt/puppetlabs
+  - name: var
+    size: 12
+    path: /var
+
+foreman_settings:
+  - name: default_download_policy
+    value: immediate
+  - name: default_proxy_download_policy
+    value: immediate
+  - name: unregister_delete_host
+    value: true
+
+custom_products:
+  - name: Extra Packages for Enterprise Linux 6
+    repo: http://download.fedoraproject.org/pub/epel/6/x86_64
+    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6
+    content_credential_name: cc-epel6
+  - name: Extra Packages for Enterprise Linux 7
+    repo: http://download.fedoraproject.org/pub/epel/7/x86_64
+    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+    content_credential_name: cc-epel7
+  - name: Extra Packages for Enterprise Linux 8
+    repo: http://download.fedoraproject.org/pub/epel/8/x86_64
+    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+    content_credential_name: cc-epel8
+
+redhat_repositories:
+  - name: "Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)"
+    product: "Red Hat Ansible Engine"
+  - name: "Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server"
+    product: "Red Hat Ansible Engine"
+    basearch: "x86_64"
+  - name: "Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)"
+    product: "Red Hat Ansible Engine"
+  - name: "Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server"
+    product: "Red Hat Ansible Engine"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - Extras (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - Fastrack (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - Optional Fastrack (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - Optional (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - RH Common (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 6 Server - Supplementary (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - Fastrack (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - Optional Fastrack (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
+    product: "Red Hat Enterprise Linux for x86_64"
+    releasever: "8"
+  - name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
+    product: "Red Hat Enterprise Linux for x86_64"
+    releasever: "8"
+  - name: "Red Hat Enterprise Linux 8 for x86_64 - High Availability (RPMs)"
+    product: "Red Hat Enterprise Linux High Availability for x86_64"
+    releasever: "8"
+  - name: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)"
+    product: "Red Hat Enterprise Linux for x86_64"
+    releasever: "8"
+  - name: "Red Hat Enterprise Linux High Availability (for RHEL 6 Server) (RPMs)"
+    product: "Red Hat Enterprise Linux High Availability for x86_64"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
+    product: "Red Hat Enterprise Linux High Availability for x86_64"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Enterprise Virtualization Agents for RHEL 6 Server (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat OpenShift Container Platform 4.2 (RPMs)"
+    product: "Red Hat OpenShift Container Platform"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite 6.6 (for RHEL 7 Server) (RPMs)"
+    product: "Red Hat Satellite"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite Capsule 6.6 (for RHEL 7 Server) (RPMs)"
+    product: "Red Hat Satellite Capsule"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite Maintenance 6 (for RHEL 7 Server) (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite Tools 6.6 (for RHEL 6 Server) (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    basearch: "x86_64"
+  - name: "Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)"
+    product: "Red Hat Enterprise Linux for x86_64"
+  - name: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 6 Server"
+    product: "Red Hat Software Collections (for RHEL Server)"
+    releasever: "6Server"
+    basearch: "x86_64"
+  - name: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Server"
+    product: "Red Hat Software Collections (for RHEL Server)"
+    releasever: "7Server"
+    basearch: "x86_64"
+  - name: "Red Hat Virtualization Host 7 (RPMs)"
+    product: "Red Hat Virtualization Host"
+    basearch: "x86_64"
+  - name: "Red Hat Virtualization Manager v4.3 (RHEL 7 Server) (RPMs)"
+    product: "Red Hat Virtualization Manager"
+    basearch: "x86_64"
+  - name: "Red Hat Virtualization Manager v4.4 (RHEL 7 Server) (RPMs)"
+    product: "Red Hat Virtualization Manager"
+    basearch: "x86_64"
+
+satellite_tuning_config_files:
+  - name: dynflowd.j2
+    path: /etc/sysconfig/dynflowd
+  - name: httpd_limits.conf.j2
+    path: /etc/systemd/system/httpd.service.d/limits.conf
+  - name: 01-satellite-tune.conf.j2
+    path: /etc/sysctl.d/01-satellite-tune.conf

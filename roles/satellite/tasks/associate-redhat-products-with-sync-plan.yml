@@ -1,0 +1,33 @@
+---
+
+- name: get enabled Red Hat products
+  shell: hammer --csv repository list | cut -d ',' -f 3 | sort --unique | grep -v '^Product$'
+  register: redhat_products
+  changed_when: false
+  check_mode: false
+#  foreman_search_facts:
+#    username: "{{ satellite_admin_username }}"
+#    password: "{{ satellite_admin_password }}"
+#    validate_certs: false
+#    server_url: "{{ satellite_url }}"
+#    resource: products
+#  register: products
+#  delegate_to: localhost
+
+#- debug:
+#    msg: "{{ poducts }}"
+
+- name: set Red Hat products to sync plan
+  katello_product:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "{{ product }}"
+    sync_plan: daily
+  loop_control:
+    loop_var: product
+  with_items:
+    - "{{ redhat_products.stdout_lines }}"
+  delegate_to: localhost

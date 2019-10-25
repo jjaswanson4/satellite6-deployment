@@ -1,0 +1,33 @@
+---
+
+- name: create satellite logical volumes
+  lvol:
+    lv: "{{ logical_volume.name }}"
+    vg: "{{ ansible_facts['lvm']['lvs']['var']['vg'] }}"
+    size: "{{ logical_volume.size }}g"
+    shrink: false
+  loop_control:
+    loop_var: logical_volume
+  with_items:
+    - "{{ satellite_logical_volumes }}"
+
+- name: create filesystem on satellite logical volumes
+  filesystem:
+    fstype: xfs
+    dev: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.name }}"
+    resizefs: true
+  loop_control:
+    loop_var: logical_volume
+  with_items:
+    - "{{ satellite_logical_volumes }}"
+
+- name: put mounts into /etc/fstab
+  mount:
+    src: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.name }}"
+    path: "{{ logical_volume.path }}"
+    fstype: xfs
+    state: mounted
+  loop_control:
+    loop_var: logical_volume
+  with_items:
+    - "{{ satellite_logical_volumes }}"

@@ -1,0 +1,19 @@
+---
+
+- name: enable Red Hat repos
+  katello_repository_set:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "{{ repo.name }}"
+    product: "{{ repo.product }}"
+    repositories:
+    - releasever: "{{ repo.releasever | default(omit) }}"
+      basearch: "{{ repo.basearch | default(omit) }}"
+  loop_control:
+    loop_var: repo
+  with_items:
+    - "{{ redhat_repositories }}"
+  delegate_to: localhost

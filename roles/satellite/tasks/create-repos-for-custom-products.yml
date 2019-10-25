@@ -1,0 +1,22 @@
+---
+
+- name: create repos for custom products
+  katello_repository:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    state: present
+    content_type: "yum"
+    name: "{{ product.name }} Repository"
+    product: "{{ product.name }}"
+    url: "{{ product.repo }}"
+    mirror_on_sync: false
+    download_policy: immediate
+    gpg_key: "{{ product.content_credential_name }}"
+  loop_control:
+    loop_var: product
+  with_items:
+    - "{{ custom_products }}"
+  delegate_to: localhost 
