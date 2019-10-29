@@ -64,6 +64,48 @@ operating_systems:
   - 'rhel7'
   - 'rhel8'
 
+composite_content_views:
+  composite-rhel6:
+    description: 'rhel6 packages'
+    content_views:
+      - content_view: cv-epel-rhel6
+      - content_view: cv-extras-rhel6
+      - content_view: cv-fasttrack-rhel6
+      - content_view: cv-ha-rhel6
+      - content_view: cv-optional-rhel6
+      - content_view: cv-rhcommon-rhel6
+      - content_view: cv-rhva-rhel6
+      - content_view: cv-server-rhel6
+      - content_view: cv-softwarecollections-rhel6
+      - content_view: cv-supplementary-rhel6
+  composite-rhel7:
+    description: 'rhel7 packages'
+    content_views:
+      - content_view: cv-ansible-rhel7
+      - content_view: cv-epel-rhel7
+      - content_view: cv-extras-rhel7
+      - content_view: cv-fasttrack-rhel7
+      - content_view: cv-ha-rhel7
+      - content_view: cv-optional-rhel7
+      - content_view: cv-os4-rhel7
+      - content_view: cv-rhcommon-rhel7
+      - content_view: cv-rhvh-rhel7
+      - content_view: cv-rhvm43-rhel7
+      - content_view: cv-rhvm44-rhel7
+      - content_view: cv-satellite66-rhel7
+      - content_view: cv-server-rhel7
+      - content_view: cv-softwarecollections-rhel7
+      - content_view: cv-supplementary-rhel7
+  composite-rhel8:
+    description: 'rhel8 packages'
+    content_views:
+      - content_view: cv-ansible-rhel8
+      - content_view: cv-appstream-rhel8
+      - content_view: cv-epel-rhel8
+      - content_view: cv-ha-rhel8
+      - content_view: cv-server-rhel8
+      - content_view: cv-supplementary-rhel8
+
 lifecycle_environments:
   - name: test
     description: 'wild west'
