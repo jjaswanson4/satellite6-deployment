@@ -15,7 +15,7 @@
   delegate_to: localhost
 
 - name: get subscriptions to create activation keys for
-  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g'
+  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g' | sort --unique
   register: current_subscriptions
   changed_when: false
   check_mode: false
