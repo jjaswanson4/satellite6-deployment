@@ -1,0 +1,42 @@
+---
+
+- name: create recommended activation keys for lifecycle environments and OSes
+  katello_activation_key:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "ak-{{ item.0.name }}-{{ item.1.name }}"
+    lifecycle_environment: "{{ item.0.name }}"
+    content_view: "composite-{{ item.1.name }}"
+    release_version: "{{ item.1.releasever }}"
+  loop: "{{ lifecycle_environments | product(operating_systems) | list }}"
+  delegate_to: localhost
+
+- name: get subscriptions to create activation keys for
+  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g'
+  register: current_subscriptions
+  changed_when: false
+  check_mode: false
+
+- debug:
+    msg: "{{ item | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
+  with_items:
+    - "{{ current_subscriptions.stdout_lines }}"
+
+- name: create activation keys for current subscriptions
+  katello_activation_key:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "ak-{{ subscription | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
+    subscriptions:
+      - name: "{{ subscription }}"
+  loop_control:
+    loop_var: subscription
+  with_items:
+    - "{{ current_subscriptions.stdout_lines }}"
+  delegate_to: localhost

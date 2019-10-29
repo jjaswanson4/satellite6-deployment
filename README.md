@@ -18,6 +18,8 @@ Configure most settings in roles/satellite/vars/main.yml
 # Known Issue
 
 - The task to sync repositories doesn't want to wait
+- Need to add a check to make sure composites get promoted
+- Activation key section occasionally fails on certain subscriptions
 
 # Comments/Questions/Concerns
 
