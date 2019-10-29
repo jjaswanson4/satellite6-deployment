@@ -1,0 +1,30 @@
+---
+
+- name: create content view {{ content_view.key }}
+  katello_content_view:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "{{ content_view.key }}"
+    repositories:
+      - name: "{{ content_view.value.repos.0.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + content_view.value.repos.0.basearch if content_view.value.repos.0.basearch is defined else '') + (' ' + content_view.value.repos.0.releasever if content_view.value.repos.0.releasever is defined else '') }}"
+        product: "{{ content_view.value.repos.0.product }}"
+{% if content_view.value.repos.1.repo is defined %}
+      - name: "{{ content_view.value.repos.1.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + content_view.value.repos.1.basearch if content_view.value.repos.1.basearch is defined else '') + (' ' + content_view.value.repos.1.releasever if content_view.value.repos.1.releasever is defined else '') }}"
+        product: "{{ content_view.value.repos.1.product }}"
+{% endif %}
+{% if content_view.value.repos.2.repo is defined %}
+      - name: "{{ content_view.value.repos.2.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + content_view.value.repos.2.basearch if content_view.value.repos.2.basearch is defined else '') + (' ' + content_view.value.repos.2.releasever if content_view.value.repos.2.releasever is defined else '') }}"
+        product: "{{ content_view.value.repos.2.product }}"
+{% endif %}
+{% if content_view.value.repos.3.repo is defined %}
+      - name: "{{ content_view.value.repos.3.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + content_view.value.repos.3.basearch if content_view.value.repos.3.basearch is defined else '') + (' ' + content_view.value.repos.3.releasever if content_view.value.repos.3.releasever is defined else '') }}"
+        product: "{{ content_view.value.repos.3.product }}"
+{% endif %}
+{% if content_view.value.repos.4.repo is defined %}
+      - name: "{{ content_view.value.repos.4.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + content_view.value.repos.4.basearch if content_view.value.repos.4.basearch is defined else '') + (' ' + content_view.value.repos.4.releasever if content_view.value.repos.4.releasever is defined else '') }}"
+        product: "{{ content_view.value.repos.4.product }}"
+{% endif %}
+  delegate_to: localhost

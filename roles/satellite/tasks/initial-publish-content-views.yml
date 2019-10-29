@@ -1,0 +1,17 @@
+---
+
+- name: publish content view version 1.0 to the library
+  katello_content_view_version:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    content_view: "{{ content_view.key }}"
+    version: 1.0
+    lifecycle_environments:
+      - Library
+  loop_control:
+    loop_var: content_view
+  loop: "{{ lookup('dict', content_views) }}"
+  delegate_to: localhost

@@ -1,0 +1,16 @@
+---
+
+- name: create content view
+  katello_content_view:
+    username: "admin"
+    password: "#Onepurdue1"
+    validate_certs: false
+    server_url: "https://satellite01.josh.lab.msp.redhat.com"
+    organization: "josh"
+    name: "cv-ansible-rhel7"
+    repositories:
+      - name: "Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+        product: "Red Hat Ansible Engine"
+      - name: "Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server x86_64"
+        product: "Red Hat Ansible Engine"
+  delegate_to: localhost

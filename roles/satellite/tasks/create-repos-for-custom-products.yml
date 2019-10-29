@@ -9,14 +9,15 @@
     organization: "{{ satellite_initial_organization }}"
     state: present
     content_type: "yum"
-    name: "{{ product.name }} Repository"
-    product: "{{ product.name }}"
-    url: "{{ product.repo }}"
+    name: "{{ repo.1.repo }}"
+    product: "{{ repo.1.product }}"
+    url: "{{ repo.1.repo_url }}"
     mirror_on_sync: false
     download_policy: immediate
-    gpg_key: "{{ product.content_credential_name }}"
+    gpg_key: "{{ repo.1.content_credential_name }}"
+  when:
+    - repo.1.content_credential is defined
   loop_control:
-    loop_var: product
-  with_items:
-    - "{{ custom_products }}"
+    loop_var: repo
+  loop: "{{ content_views | subelements('repos') }}"
   delegate_to: localhost 

@@ -59,142 +59,368 @@ foreman_settings:
   - name: unregister_delete_host
     value: true
 
-custom_products:
-  - name: Extra Packages for Enterprise Linux 6
-    repo: http://download.fedoraproject.org/pub/epel/6/x86_64
-    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6
-    content_credential_name: cc-epel6
-  - name: Extra Packages for Enterprise Linux 7
-    repo: http://download.fedoraproject.org/pub/epel/7/x86_64
-    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
-    content_credential_name: cc-epel7
-  - name: Extra Packages for Enterprise Linux 8
-    repo: http://download.fedoraproject.org/pub/epel/8/x86_64
-    content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
-    content_credential_name: cc-epel8
+operating_systems:
+  - 'rhel6'
+  - 'rhel7'
+  - 'rhel8'
+
+lifecycle_environments:
+  - name: test
+    description: 'wild west'
+    prior: 'Library'
+  - name: stage
+    description: 'dont test in prod'
+    prior: 'test'
+  - name: prod
+    description: 'big leagues'
+    prior: 'stage'
+
+content_views:
+  cv-epel-rhel6:
+    repos:
+      - repo: "Extra Packages for Enterprise Linux 6 Repository"
+        repo_url: "http://download.fedoraproject.org/pub/epel/6/x86_64"
+        product: "Extra Packages for Enterprise Linux 6"
+        content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6"
+        content_credential_name: "cc-epel6"
+  cv-epel-rhel7:
+    repos:
+      - repo: "Extra Packages for Enterprise Linux 7 Repository"
+        repo_url: "http://download.fedoraproject.org/pub/epel/7/x86_64"
+        product: "Extra Packages for Enterprise Linux 7"
+        content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
+        content_credential_name: "cc-epel7"
+  cv-epel-rhel8:
+    repos:
+      - repo: "Extra Packages for Enterprise Linux 8 Repository"
+        repo_url: "http://download.fedoraproject.org/pub/epel/8/x86_64"
+        product: "Extra Packages for Enterprise Linux 8"
+        content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8"
+        content_credential_name: "cc-epel8"
+  cv-ansible-rhel8:
+    description: 'ansible on RHEL8'
+    repos:
+      - repo: "Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)"
+        product: 'Red Hat Ansible Engine'
+      - repo: "Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)"
+        product: 'Red Hat Ansible Engine'
+  cv-ansible-rhel7:
+    description: 'ansible on RHEL7'
+    repos:
+      - repo: "Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server"
+        product: 'Red Hat Ansible Engine'
+        basearch: "x86_64"
+      - repo: "Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server"
+        product: 'Red Hat Ansible Engine'
+        basearch: "x86_64"
+  cv-appstream-rhel8:
+    repos:
+      - repo: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
+        product: "Red Hat Enterprise Linux for x86_64"
+        releasever: "8"
+  cv-extras-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server - Extras (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-extras-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-fasttrack-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server - Fastrack (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+      - repo: "Red Hat Enterprise Linux 6 Server - Optional Fastrack (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-fasttrack-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server - Fastrack (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+      - repo: "Red Hat Enterprise Linux 7 Server - Optional Fastrack (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-ha-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux High Availability (for RHEL 6 Server) (RPMs)"
+        product: "Red Hat Enterprise Linux High Availability for x86_64"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-ha-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
+        product: "Red Hat Enterprise Linux High Availability for x86_64"
+        releasever: "7Server"
+        basearch: "x86_64"
+        content_view: 'cv-ha-rhel7'
+  cv-ha-rhel8:
+    repos:
+      - repo: "Red Hat Enterprise Linux 8 for x86_64 - High Availability (RPMs)"
+        product: "Red Hat Enterprise Linux High Availability for x86_64"
+        releasever: "8"
+  cv-optional-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server - Optional (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-optional-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "7Server"
+        basearch: "x86_64"
+  cv-os4-rhel7:
+    repos:
+      - repo: "Red Hat OpenShift Container Platform 4.2 (RPMs)"
+        product: "Red Hat OpenShift Container Platform"
+        basearch: "x86_64"
+  cv-rhcommon-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-rhcommon-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "7Server"
+        basearch: "x86_64"
+  cv-rhva-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Virtualization Agents for RHEL 6 Server (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-rhvh-rhel7:
+    repos:
+      - repo: "Red Hat Virtualization Host 7 (RPMs)"
+        product: "Red Hat Virtualization Host"
+        basearch: "x86_64"
+        content_view: 'cv-rhvh-rhel7'
+  cv-rhvm43-rhel7:
+    repos:
+      - repo: "Red Hat Virtualization Manager v4.3 (RHEL 7 Server) (RPMs)"
+        product: "Red Hat Virtualization Manager"
+        basearch: "x86_64"
+  cv-rhvm44-rhel7:
+    repos:
+      - repo: "Red Hat Virtualization Manager v4.4 (RHEL 7 Server) (RPMs)"
+        product: "Red Hat Virtualization Manager"
+        basearch: "x86_64"
+  cv-satellite66-rhel7:
+    repos:
+      - repo: "Red Hat Satellite 6.6 (for RHEL 7 Server) (RPMs)"
+        product: "Red Hat Satellite"
+        basearch: "x86_64"
+      - repo: "Red Hat Satellite Capsule 6.6 (for RHEL 7 Server) (RPMs)"
+        product: "Red Hat Satellite Capsule"
+        basearch: "x86_64"
+      - repo: "Red Hat Satellite Maintenance 6 (for RHEL 7 Server) (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-server-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "6Server"
+        basearch: "x86_64"
+      - repo: "Red Hat Satellite Tools 6.6 (for RHEL 6 Server) (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-server-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "7Server"
+        basearch: "x86_64"
+      - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        basearch: "x86_64"
+  cv-server-rhel8:
+    repos:
+      - repo: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
+        product: "Red Hat Enterprise Linux for x86_64"
+        releasever: "8"
+      - repo: "Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)"
+        product: "Red Hat Enterprise Linux for x86_64"
+        content_view: 'cv-server-rhel8'
+  cv-softwarecollections-rhel6:
+    repos:
+      - repo: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 6 Server"
+        product: "Red Hat Software Collections (for RHEL Server)"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-supplementary-rhel6:
+    repos:
+      - repo: "Red Hat Enterprise Linux 6 Server - Supplementary (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "6Server"
+        basearch: "x86_64"
+  cv-softwarecollections-rhel7:
+    repos:
+      - repo: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Server"
+        product: "Red Hat Software Collections (for RHEL Server)"
+        releasever: "7Server"
+        basearch: "x86_64"
+  cv-supplementary-rhel7:
+    repos:
+      - repo: "Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)"
+        product: "Red Hat Enterprise Linux Server"
+        releasever: "7Server"
+        basearch: "x86_64"
+  cv-supplementary-rhel8:
+    repos:
+      - repo: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)"
+        product: "Red Hat Enterprise Linux for x86_64"
+        releasever: "8"
 
 redhat_repositories:
-  - name: "Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)"
-    product: "Red Hat Ansible Engine"
-  - name: "Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server"
-    product: "Red Hat Ansible Engine"
-    basearch: "x86_64"
-  - name: "Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)"
-    product: "Red Hat Ansible Engine"
-  - name: "Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server"
-    product: "Red Hat Ansible Engine"
-    basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - Extras (RPMs)"
+  - repo: "Red Hat Enterprise Linux 6 Server - Fastrack (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - Fastrack (RPMs)"
+    content_view: 'cv-fasttrack-rhel6'
+  - repo: "Red Hat Enterprise Linux 6 Server - Optional Fastrack (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - Optional Fastrack (RPMs)"
-    product: "Red Hat Enterprise Linux Server"
-    basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - Optional (RPMs)"
+    content_view: 'cv-fasttrack-rhel6'
+  - repo: "Red Hat Enterprise Linux 6 Server - Optional (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - RH Common (RPMs)"
+    content_view: 'cv-optional-rhel6'
+  - repo: "Red Hat Enterprise Linux 6 Server - RH Common (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server (RPMs)"
+    content_view: 'cv-rhcommon-rhel6'
+  - repo: "Red Hat Enterprise Linux 6 Server (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 6 Server - Supplementary (RPMs)"
+    content_view: 'cv-server-rhel6'
+  - repo: "Red Hat Enterprise Linux 6 Server - Supplementary (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)"
+    content_view: 'cv-supplementary-rhel6'
+  - repo: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - Fastrack (RPMs)"
+    content_view: 'cv-extras-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server - Fastrack (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - Optional Fastrack (RPMs)"
+    content_view: 'cv-fasttrack-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server - Optional Fastrack (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)"
-    product: "Red Hat Enterprise Linux Server"
-    releasever: "7Server"
-    basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)"
-    product: "Red Hat Enterprise Linux Server"
-    releasever: "7Server"
-    basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server (RPMs)"
+    content_view: 'cv-fasttrack-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "7Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)"
+    content_view: 'cv-optional-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "7Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
+    content_view: 'cv-rhcommon-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+    content_view: 'cv-server-rhel7'
+  - repo: "Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)"
+    product: "Red Hat Enterprise Linux Server"
+    releasever: "7Server"
+    basearch: "x86_64"
+    content_view: 'cv-supplementary-rhel7'
+  - repo: "Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)"
     product: "Red Hat Enterprise Linux for x86_64"
     releasever: "8"
-  - name: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
+    content_view: 'cv-appstream-rhel8'
+  - repo: "Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)"
     product: "Red Hat Enterprise Linux for x86_64"
     releasever: "8"
-  - name: "Red Hat Enterprise Linux 8 for x86_64 - High Availability (RPMs)"
+    content_view: 'cv-server-rhel8'
+  - repo: "Red Hat Enterprise Linux 8 for x86_64 - High Availability (RPMs)"
     product: "Red Hat Enterprise Linux High Availability for x86_64"
     releasever: "8"
-  - name: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)"
+    content_view: 'cv-ha-rhel8'
+  - repo: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)"
     product: "Red Hat Enterprise Linux for x86_64"
     releasever: "8"
-  - name: "Red Hat Enterprise Linux High Availability (for RHEL 6 Server) (RPMs)"
+    content_view: 'cv-supplementary-rhel8'
+  - repo: "Red Hat Enterprise Linux High Availability (for RHEL 6 Server) (RPMs)"
     product: "Red Hat Enterprise Linux High Availability for x86_64"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
+    content_view: 'cv-ha-rhel6'
+  - repo: "Red Hat Enterprise Linux High Availability (for RHEL 7 Server) (RPMs)"
     product: "Red Hat Enterprise Linux High Availability for x86_64"
     releasever: "7Server"
     basearch: "x86_64"
-  - name: "Red Hat Enterprise Virtualization Agents for RHEL 6 Server (RPMs)"
+    content_view: 'cv-ha-rhel7'
+  - repo: "Red Hat Enterprise Virtualization Agents for RHEL 6 Server (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat OpenShift Container Platform 4.2 (RPMs)"
+    content_view: 'cv-rhva-rhel6'
+  - repo: "Red Hat OpenShift Container Platform 4.2 (RPMs)"
     product: "Red Hat OpenShift Container Platform"
     basearch: "x86_64"
-  - name: "Red Hat Satellite 6.6 (for RHEL 7 Server) (RPMs)"
+    content_view: 'cv-os4-rhel7'
+  - repo: "Red Hat Satellite 6.6 (for RHEL 7 Server) (RPMs)"
     product: "Red Hat Satellite"
     basearch: "x86_64"
-  - name: "Red Hat Satellite Capsule 6.6 (for RHEL 7 Server) (RPMs)"
+    content_view: 'cv-satellite66-rhel7'
+  - repo: "Red Hat Satellite Capsule 6.6 (for RHEL 7 Server) (RPMs)"
     product: "Red Hat Satellite Capsule"
     basearch: "x86_64"
-  - name: "Red Hat Satellite Maintenance 6 (for RHEL 7 Server) (RPMs)"
+    content_view: 'cv-satellite66-rhel7'
+  - repo: "Red Hat Satellite Maintenance 6 (for RHEL 7 Server) (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Satellite Tools 6.6 (for RHEL 6 Server) (RPMs)"
+    content_view: 'cv-satellite66-rhel7'
+  - repo: "Red Hat Satellite Tools 6.6 (for RHEL 6 Server) (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
+    content_view: 'cv-server-rhel6'
+  - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
     product: "Red Hat Enterprise Linux Server"
     basearch: "x86_64"
-  - name: "Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)"
+    content_view: 'cv-server-rhel7'
+  - repo: "Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)"
     product: "Red Hat Enterprise Linux for x86_64"
-  - name: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 6 Server"
+    content_view: 'cv-server-rhel8'
+  - repo: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 6 Server"
     product: "Red Hat Software Collections (for RHEL Server)"
     releasever: "6Server"
     basearch: "x86_64"
-  - name: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Server"
+    content_view: 'cv-softwarecollections-rhel6'
+  - repo: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Server"
     product: "Red Hat Software Collections (for RHEL Server)"
     releasever: "7Server"
     basearch: "x86_64"
-  - name: "Red Hat Virtualization Host 7 (RPMs)"
+    content_view: 'cv-softwarecollections-rhel7'
+  - repo: "Red Hat Virtualization Host 7 (RPMs)"
     product: "Red Hat Virtualization Host"
     basearch: "x86_64"
-  - name: "Red Hat Virtualization Manager v4.3 (RHEL 7 Server) (RPMs)"
+    content_view: 'cv-rhvh-rhel7'
+  - repo: "Red Hat Virtualization Manager v4.3 (RHEL 7 Server) (RPMs)"
     product: "Red Hat Virtualization Manager"
     basearch: "x86_64"
-  - name: "Red Hat Virtualization Manager v4.4 (RHEL 7 Server) (RPMs)"
+    content_view: 'cv-rhvm43-rhel7'
+  - repo: "Red Hat Virtualization Manager v4.4 (RHEL 7 Server) (RPMs)"
     product: "Red Hat Virtualization Manager"
     basearch: "x86_64"
+    content_view: 'cv-rhvm44-rhel7'
 
 satellite_tuning_config_files:
   - name: dynflowd.j2

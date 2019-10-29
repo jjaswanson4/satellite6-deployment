@@ -1,3 +1,6 @@
 ---
 
 satellite_url: "https://{{ ansible_fqdn }}"
+
+#remove_content_view_files: false
+remove_content_view_files: true

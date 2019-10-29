@@ -1,0 +1,17 @@
+---
+
+- name: create lifecycle environments
+  katello_lifecycle_environment:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "{{ lifecycle_environment.name }}"
+    prior: "{{ lifecycle_environment.prior }}"
+    description: "{{ lifecycle_environment.description | default(omit) }}"
+  loop_control:
+    loop_var: lifecycle_environment
+  with_items:
+    - "{{ lifecycle_environments }}"
+  delegate_to: localhost
