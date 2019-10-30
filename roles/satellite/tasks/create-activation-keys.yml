@@ -14,29 +14,47 @@
   loop: "{{ lifecycle_environments | product(operating_systems) | list }}"
   delegate_to: localhost
 
-- name: get subscriptions to create activation keys for
-  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g' | sort --unique
-  register: current_subscriptions
-  changed_when: false
-  check_mode: false
+#- name: get subscriptions to create activation keys for
+#  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g' | sort --unique
+#  register: current_subscriptions
+#  changed_when: false
+#  check_mode: false
 
-- debug:
-    msg: "{{ item | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
-  with_items:
-    - "{{ current_subscriptions.stdout_lines }}"
+#- debug:
+#    msg: "{{ item | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
+#  with_items:
+#    - "{{ current_subscriptions.stdout_lines }}"
 
-- name: create activation keys for current subscriptions
+- name: create activation keys with a subscription
   katello_activation_key:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     organization: "{{ satellite_initial_organization }}"
-    name: "ak-{{ subscription | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
+    name: "{{ activationkey.key }}"
     subscriptions:
-      - name: "{{ subscription }}"
+      - name: "{{ activationkey.value.subscriptions.0.subscription }}"
+  when:
+    - activationkey.value.subscriptions.0.subscription is defined
   loop_control:
-    loop_var: subscription
-  with_items:
-    - "{{ current_subscriptions.stdout_lines }}"
+    loop_var: activationkey
+  loop: "{{ lookup('dict', activation_keys) }}"
+  delegate_to: localhost
+
+- name: create activation keys with a subscription
+  katello_activation_key:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    name: "{{ activationkey.key }}"
+    subscriptions:
+      - name: "{{ activationkey.value.subscriptions.0.pool_id }}"
+  when:
+    - activationkey.value.subscriptions.0.pool_id is defined
+  loop_control:
+    loop_var: activationkey
+  loop: "{{ lookup('dict', activation_keys) }}"
   delegate_to: localhost
