@@ -138,7 +138,7 @@ content_views:
   cv-epel-rhel8:
     repos:
       - repo: "Extra Packages for Enterprise Linux 8 Repository"
-        repo_url: "http://download.fedoraproject.org/pub/epel/8/x86_64"
+        repo_url: "http://download.fedoraproject.org/pub/epel/8/Everything/x86_64"
         product: "Extra Packages for Enterprise Linux 8"
         content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8"
         content_credential_name: "cc-epel8"
@@ -153,6 +153,9 @@ content_views:
     description: 'ansible on RHEL7'
     repos:
       - repo: "Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server"
+        product: 'Red Hat Ansible Engine'
+        basearch: "x86_64"
+      - repo: "Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server"
         product: 'Red Hat Ansible Engine'
         basearch: "x86_64"
       - repo: "Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server"
@@ -324,6 +327,17 @@ content_views:
       - repo: "Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)"
         product: "Red Hat Enterprise Linux for x86_64"
         releasever: "8"
+  cv-ceph-rhel7:
+    repos:
+      - repo: Red Hat Ceph Storage MON 3 for Red Hat Enterprise Linux 7 Server (RPMs)
+        product: Red Hat Ceph Storage MON
+        basearch: x86_64
+      - repo: Red Hat Ceph Storage OSD 3 for Red Hat Enterprise Linux 7 Server (RPMs)
+        product: Red Hat Ceph Storage OSD
+        basearch: x86_64
+      - repo: Red Hat Ceph Storage Tools 3 for Red Hat Enterprise Linux 7 Server (RPMs)
+        product: Red Hat Ceph Storage
+        basearch: x86_64
 
 activation_keys:
   ak-rhel7:
@@ -332,9 +346,8 @@ activation_keys:
   ak-rhel6:
     subscriptions:
       - subscription: Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
-  ak-ceph7:
-    subscriptions:
-      - pool_id: 8a8fec0d6dfe22fe016dfe41b7db21e3
+#  ak-ceph7:
+#    subscriptions:
   ak-standard:
     subscriptions:
   ak-josh7:
