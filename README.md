@@ -15,7 +15,7 @@ Configure most settings in roles/satellite/vars/main.yml
 - You will need to provide your own manifest generated from the [Red Hat customer portal](https://access.redhat.com/management/subscription_allocations)
 - The foreman ansible modules should be available on the system running this playbook. They do not need to be on the satellite server. An example ansible.cfg is included.
 
-# Known Issue
+# Known Issues
 
 - The task to sync repositories doesn't want to wait
 - Need to add a check to make sure composites get promoted
