@@ -5,7 +5,7 @@ satellite_initial_location: msp-lab
 satellite_admin_username: admin
 satellite_admin_password: 'changeme'
 
-satellite_manifest_path: 'files/josh-manifest.zip'
+satellite_manifest_path: "{{ role_path }}files/josh-manifest.zip"
 
 satellite_install_repos:
   - 'rhel-7-server-rpms'
