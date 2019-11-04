@@ -84,6 +84,7 @@ composite_content_views:
   composite-rhel7:
     description: 'rhel7 packages'
     content_views:
+      - content_view: cv-ceph-rhel7
       - content_view: cv-ansible-rhel7
       - content_view: cv-epel-rhel7
       - content_view: cv-extras-rhel7
