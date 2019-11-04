@@ -14,6 +14,8 @@ Configure most settings in roles/satellite/vars/main.yml
 - This was written for Ansible 2.8. Older versions may work but YMMV
 - You will need to provide your own manifest generated from the [Red Hat customer portal](https://access.redhat.com/management/subscription_allocations)
 - The foreman ansible modules should be available on the system running this playbook. They do not need to be on the satellite server. An example ansible.cfg is included.
+- apypie is required (install it with pip) | To be added to the pre-flight checks task
+
 
 # Ansible Notes
 
@@ -33,7 +35,7 @@ Configure most settings in roles/satellite/vars/main.yml
 
 - Test building more than one satellite at a time
 - Add in building capsules
-- Add in uploading remote-execution examples
+- Add in uploading remote-execution templates
 - Day 3 operations, such as creating new versions of content views, promoting the composites, and other "day 3" operations will be added to another repository.
 
 # Comments/Questions/Concerns
