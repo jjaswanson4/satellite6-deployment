@@ -22,6 +22,6 @@
 - name: wait for repos to finish syncing
   shell: hammer --csv task list --search "state = running and action ~ Synchronize" | wc -l
   register: repo_sync_status
-  until: repo_sync_status | int == 1
+  until: repo_sync_status.stdout | int == 1
   retries: 960
   delay: 60
