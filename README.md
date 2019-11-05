@@ -30,6 +30,7 @@ Configure most settings in roles/satellite/vars/main.yml
 - Activation key section occasionally fails on certain subscriptions
 
 * Please open issues on GitHub if something else doesn't work as expected
+* Satellite 6.6 will remain the 'master' branch until this playbook is viable front to back without hand-holding
 
 # To-Dos
 
