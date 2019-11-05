@@ -17,22 +17,11 @@
       async: 999999
       poll: 0
       register: repos_sync
-
-
-    - debug:
-        msg: "{{ item }}"
-      loop: "{{ repos_sync.result }}"
-
-    - name: wait for repos to finish sncing
-      async_status:
-        jid: "{{ repo_sync.ansible_job_id }}"
-      when: repo_sync.ansible_job_id is defined
-      loop_control:
-        loop_var: repo_sync
-      with_items:
-        - "{{ repos_sync }}"
-      register: async_job_result
-      until: async_job_result.finished
-      retries: 999
-      delay: 10
   delegate_to: "{{ delegate_host }}"
+
+- name: wait for repos to finish syncing
+  shell: hammer --csv task list --search "state = running and action ~ Synchronize" | wc -l
+  register: repo_sync_status
+  until: repo_sync_status | int > 1
+  retries: 960
+  delay: 60
