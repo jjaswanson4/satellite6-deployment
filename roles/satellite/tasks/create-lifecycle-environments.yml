@@ -14,4 +14,4 @@
     loop_var: lifecycle_environment
   with_items:
     - "{{ lifecycle_environments }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"

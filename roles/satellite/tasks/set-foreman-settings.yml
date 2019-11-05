@@ -12,5 +12,5 @@
     loop_var: setting
   with_items:
     - "{{ foreman_settings }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
 

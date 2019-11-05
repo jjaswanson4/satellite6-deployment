@@ -12,7 +12,7 @@
     content_view: "composite-{{ item.1.name }}"
     release_version: "{{ item.1.releasever }}"
   loop: "{{ lifecycle_environments | product(operating_systems) | list }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
 
 #- name: get subscriptions to create activation keys for
 #  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g' | sort --unique
@@ -40,7 +40,7 @@
   loop_control:
     loop_var: activationkey
   loop: "{{ lookup('dict', activation_keys) }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
 
 - name: create activation keys with a subscription
   katello_activation_key:
@@ -57,4 +57,4 @@
   loop_control:
     loop_var: activationkey
   loop: "{{ lookup('dict', activation_keys) }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
