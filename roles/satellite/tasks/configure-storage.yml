@@ -2,32 +2,29 @@
 
 - name: create satellite logical volumes
   lvol:
-    lv: "{{ logical_volume.name }}"
+    lv: "{{ logical_volume.key }}"
     vg: "{{ ansible_facts['lvm']['lvs']['var']['vg'] }}"
-    size: "{{ logical_volume.size }}g"
+    size: "{{ logical_volume.value.size }}g"
     shrink: false
   loop_control:
     loop_var: logical_volume
-  with_items:
-    - "{{ satellite_logical_volumes }}"
+  loop: "{{ lookup('dict', satellite_logical_volumes) }}"
 
 - name: create filesystem on satellite logical volumes
   filesystem:
     fstype: xfs
-    dev: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.name }}"
+    dev: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.key }}"
     resizefs: true
   loop_control:
     loop_var: logical_volume
-  with_items:
-    - "{{ satellite_logical_volumes }}"
+  loop: "{{ lookup('dict', satellite_logical_volumes) }}"
 
 - name: put mounts into /etc/fstab
   mount:
-    src: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.name }}"
-    path: "{{ logical_volume.path }}"
+    src: "/dev/mapper/{{ ansible_facts['lvm']['lvs']['var']['vg'] }}-{{ logical_volume.key }}"
+    path: "{{ logical_volume.value.path }}"
     fstype: xfs
     state: mounted
   loop_control:
     loop_var: logical_volume
-  with_items:
-    - "{{ satellite_logical_volumes }}"
+  loop: "{{ lookup('dict', satellite_logical_volumes) }}"

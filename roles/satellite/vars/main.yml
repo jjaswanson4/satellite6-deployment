@@ -17,37 +17,37 @@ satellite_install_repos:
 satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
 
 satellite_logical_volumes:
-  - name: cache
+  cache:
     size: 20
     path: /var/cache/pulp
-  - name: pulp
+  pulp:
     size: 750
     path: /var/lib/pulp
-  - name: mongodb
+  mongodb:
     size: 50
     path: /var/lib/mongodb
-  - name: qpidd
+  qpidd:
     size: 20
     path: /var/lib/qpidd
-  - name: varlog
+  varlog:
     size: 10
     path: /var/log
-  - name: pqsql
+  pqsql:
     size: 25
     path: /var/lib/pgsql
-  - name: squid
+  squid:
     size: 10
     path: /var/spool/squid
-  - name: usr
+  usr:
     size: 8
     path: /usr
-  - name: opt
+  opt:
     size: 8
     path: /opt
-  - name: puppetlabs
+  puppetlabs:
     size: 1
     path: /opt/puppetlabs
-  - name: var
+  var:
     size: 12
     path: /var
 
