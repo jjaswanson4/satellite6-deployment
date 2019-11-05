@@ -14,4 +14,4 @@
   loop_control:
     loop_var: content_view
   loop: "{{ lookup('dict', content_views) }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"

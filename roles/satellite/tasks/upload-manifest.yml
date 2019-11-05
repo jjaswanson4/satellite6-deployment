@@ -9,4 +9,4 @@
     organization: "{{ satellite_initial_organization }}"
     state: present
     manifest_path: "{{ satellite_manifest_path }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"

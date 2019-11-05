@@ -10,4 +10,4 @@
     content_view: "{{ content_view }}"
     lifecycle_environments:
       - Library
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"

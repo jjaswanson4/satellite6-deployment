@@ -7,7 +7,7 @@
   loop_control:
     loop_var: content_view
   loop: "{{ lookup('dict', content_views) }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
 
 - name: include tasks to create content views
   include_tasks: "{{ role_path }}/tasks/create-content-view-{{ content_view.key }}.yml"
@@ -24,4 +24,4 @@
   loop: "{{ lookup('dict', content_views) }}"
   when:
     - remove_content_view_files
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"

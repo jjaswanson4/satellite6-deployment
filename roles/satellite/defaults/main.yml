@@ -3,7 +3,11 @@
 satellite_url: "https://{{ ansible_fqdn }}"
 
 # Set this to false to have the playbook delete generated task files.
-remove_content_view_files: false
-#remove_content_view_files: true
+#remove_content_view_files: false
+remove_content_view_files: true
 
-all_products: []
+# What host has the modules. By default: localhost
+delegate_host: localhost
+
+# In the future, setting this to false will set up SCL version of pip
+im_ok_with_pip_from_epel: true

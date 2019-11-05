@@ -12,7 +12,7 @@
 #    server_url: "{{ satellite_url }}"
 #    resource: products
 #  register: products
-#  delegate_to: localhost
+#  delegate_to: "{{ delegate_host }}"
 
 #- debug:
 #    msg: "{{ poducts }}"
@@ -30,4 +30,4 @@
     loop_var: product
   with_items:
     - "{{ redhat_products.stdout_lines }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_host }}"
