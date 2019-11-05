@@ -25,7 +25,7 @@ Configure most settings in roles/satellite/vars/main.yml
 
 # Known Issues
 
-- The task to sync repositories doesn't want to wait
+- ~~The task to sync repositories doesn't want to wait~~ [Fixed!](https://github.com/jjaswanson4/satellite6-deployment/pull/9/commits/b3e17b50a48a88af2a2f082bb2293191b3bfb7b9)
 - Need to add a check to make sure composites get promoted
 - Activation key section occasionally fails on certain subscriptions
 
