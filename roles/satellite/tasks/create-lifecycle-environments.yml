@@ -1,7 +1,7 @@
 ---
 
 - name: create lifecycle environments
-  katello_lifecycle_environment:
+  theforeman.foreman.katello_lifecycle_environment:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
