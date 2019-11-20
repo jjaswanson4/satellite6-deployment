@@ -1,7 +1,7 @@
 ---
 
 - name: create recommended activation keys for lifecycle environments and OSes
-  katello_activation_key:
+  theforeman.foreman.katello_activation_key:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
@@ -14,19 +14,8 @@
   loop: "{{ lifecycle_environments | product(operating_systems) | list }}"
   delegate_to: "{{ delegate_host }}"
 
-#- name: get subscriptions to create activation keys for
-#  shell: hammer --csv subscription list --organization '{{ satellite_initial_organization }}' | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $3}' | grep -v '^Name' | sed 's/"//g' | sort --unique
-#  register: current_subscriptions
-#  changed_when: false
-#  check_mode: false
-
-#- debug:
-#    msg: "{{ item | regex_replace('\\(','') | regex_replace('\\)','') | regex_replace(' ','-') | regex_replace(',','') }}"
-#  with_items:
-#    - "{{ current_subscriptions.stdout_lines }}"
-
 - name: create activation keys with a subscription
-  katello_activation_key:
+  theforeman.foreman.katello_activation_key:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
@@ -43,7 +32,7 @@
   delegate_to: "{{ delegate_host }}"
 
 - name: create activation keys with a subscription
-  katello_activation_key:
+  theforeman.foreman.katello_activation_key:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
