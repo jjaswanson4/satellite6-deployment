@@ -12,12 +12,16 @@ satellite_admin_password: 'changeme'
 
 # settings for installing satellite rpms
 satellite_manifest_path: "{{ role_path }}files/josh-manifest.zip"
-satellite_install_repos:
+common_install_repos:
   - 'rhel-7-server-rpms'
   - 'rhel-server-rhscl-7-rpms'
-  - 'rhel-7-server-satellite-6.6-rpms'
   - 'rhel-7-server-satellite-maintenance-6-rpms'
   - 'rhel-7-server-ansible-2.8-rpms'
+satellite_repos:
+  - 'rhel-7-server-satellite-6.6-rpms'
+capsule_repos:
+  - 'rhel-7-server-satellite-capsule-6.6-rpms'
+install_repos: []
 satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
 
 # storage configuration for satellite
