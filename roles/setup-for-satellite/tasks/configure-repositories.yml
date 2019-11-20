@@ -1,0 +1,39 @@
+---
+
+- name: set repos for satellite
+  set_fact:
+    install_repos: "{{ common_install_repos + satellite_repos }}"
+  when:
+    - "'satellite' in group_names"
+
+- name: set repos for capsules
+  set_fact:
+    install_repos: "{{ common_install_repos + capsule_repos }}"
+  when:
+    - "'capsule' in group_names"
+
+- name: enable install repos
+  rhsm_repository:
+    name: "{{ repo }}"
+    state: enabled
+  loop_control:
+    loop_var: repo
+  loop:
+    - "{{ install_repos }}"
+
+- name: get other enabled repos
+  shell: subscription-manager repos --list-enabled | grep 'Repo ID' | awk '{print $3}'
+  register: enabled_repos
+  changed_when: false
+  check_mode: false
+
+- name: disable unneeded repos
+  rhsm_repository:
+    name: "{{ repo }}"
+    state: disabled
+  when:
+    - repo not in satellite_install_repos
+  loop_control:
+    loop_var: repo
+  with_items:
+    - "{{ enabled_repos.stdout_lines }}"
