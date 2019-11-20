@@ -1,22 +1,18 @@
 ---
 
 - name: sync all repos
-  block:
-
-    - name: kick off repository Sync tasks
-      katello_sync:
-        username: "{{ satellite_admin_username }}"
-        password: "{{ satellite_admin_password }}"
-        validate_certs: false
-        server_url: "{{ satellite_url }}"
-        organization: "{{ satellite_initial_organization }}"
-        product: "{{ product.1.product }}"
-      loop_control:
-        loop_var: product
-      loop: "{{ content_views | subelements('repos') }}"
-      async: 999999
-      poll: 0
-      register: repos_sync
+  theforeman.foreman.katello_sync:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ satellite_initial_organization }}"
+    product: "{{ product.1.product }}"
+  loop_control:
+    loop_var: product
+  loop: "{{ content_views | subelements('repos') }}"
+  async: 999999
+  poll: 0
   delegate_to: "{{ delegate_host }}"
 
 - name: wait for repos to finish syncing
