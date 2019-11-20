@@ -7,3 +7,4 @@
   when:
     - "'satellite' in group_names"
 - import_tasks: configure-repositories.yml
+- import_tasls: install-satellite-rpms.yml
