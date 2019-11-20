@@ -32,7 +32,7 @@
     name: "{{ repo }}"
     state: disabled
   when:
-    - repo not in satellite_install_repos
+    - repo not install_repos
   loop_control:
     loop_var: repo
   with_items:
