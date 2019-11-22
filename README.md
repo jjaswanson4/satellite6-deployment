@@ -6,6 +6,7 @@ Update 11/22/2019:
 - Ansible collections now supported
 - What was one giant role has been broken into more consumable roles
 - Most of the groundwork for building capsules is in
+- Now supports multiple satellite builds via independent vars files
 
 # Usage
 
