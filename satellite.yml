@@ -1,7 +1,18 @@
 ---
 
-- name: satellite
+- name: setup server to be satellite or a capsule
   hosts:
     - satellite
+    - capsule
   roles:
-    - satellite
+    - setup-for-satellite
+
+
+#  hosts:
+#    - satellite
+#  collections:
+#    - theforeman.foreman
+#  tasks:
+#    - import_role: 
+#        name: satellite
+#    - satellite

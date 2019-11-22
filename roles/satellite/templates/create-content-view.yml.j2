@@ -1,7 +1,7 @@
 ---
 
 - name: create content view {{ content_view.key }}
-  katello_content_view:
+  theforeman.foreman.katello_content_view:
 {% raw %}
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"

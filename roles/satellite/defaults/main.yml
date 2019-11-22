@@ -6,8 +6,3 @@ satellite_url: "https://{{ ansible_fqdn }}"
 #remove_content_view_files: false
 remove_content_view_files: true
 
-# What host has the modules. By default: localhost
-delegate_host: localhost
-
-# In the future, setting this to false will set up SCL version of pip
-im_ok_with_pip_from_epel: true

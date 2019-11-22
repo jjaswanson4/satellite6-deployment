@@ -1,0 +1,71 @@
+---
+
+- name: check for x86_64 architecture
+  fail:
+    msg: "Satellite 6 requires x86_64 architecture"
+  when:
+    - ansible_facts['architecture'] != 'x86_64'
+
+- name: check cpu
+  fail:
+    msg: "Satellite requires at least 4 cpu cores"
+  when:
+    - ansible_facts['processor_count'] | int * ansible_facts['processor_count'] | int < 4
+
+- name: check memory
+  fail:
+    msg: "Satellite requires at least 20GB of ram"
+  when:
+    - ansible_facts['memory_mb']['real']['total'] | int < 20480
+
+- name: get current registration point
+  shell: subscription-manager config
+  register: registration_status
+  check_mode: false
+  changed_when: false
+  when:
+    - "'satellite' in group_names"
+
+- name: check registration point
+  fail:
+    msg: "Not registered to RHSM"
+  when:
+    - "'satellite' in group_names"
+    - "'subscription.rhsm.redhat.com' not in registration_status.stdout"
+
+- name: get available space in volume group of var
+  shell: vgs --units G --noheadings | grep "{{ ansible_facts['lvm']['lvs']['var']['vg'] }}" | awk '{print $6}' | sed 's/G//'
+  register: disk_space
+  changed_when: false
+  check_mode: false
+
+- name: check disk space
+  fail:
+    msg: "{{ ansible_facts['lvm']['lvs']['var']['vg'] }} does not have enough space"
+  when:
+    - disk_space.stdout | int < 1500
+
+- name: get current umask
+  shell: umask
+  register: current_umask
+  changed_when: false
+  check_mode: false
+
+- name: check umask
+  fail:
+    msg: "system umask must be 0022"
+  when:
+    - current_umask.stdout != '0022'
+
+- name: check upstream dns
+  shell: ping -c 1 "{{ ansible_fqdn }}"
+  register: dns_status
+  check_mode: false
+  failed_when: false
+  changed_when: false
+
+- name: fail on dns
+  fail:
+    msg: "upstream dns must be configured"
+  when:
+    - dns_status.rc | int != 0

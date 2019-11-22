@@ -1,6 +1,6 @@
 ---
 
-- name: install satellite rpms
+- name: install packages for satellite
   yum:
     name: satellite
     state: present

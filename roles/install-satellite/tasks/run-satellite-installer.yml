@@ -28,7 +28,10 @@
     - "'Failed to open TCP connection' in hammer_output.stderr"
 
 - name: run the satellite installer
-  shell: "satellite-installer --scenario satellite --foreman-initial-admin-username '{{ satellite_admin_username }}' --foreman-initial-admin-password '{{ satellite_admin_password }}'"
+  shell: >-
+    satellite-installer --scenario satellite
+    --foreman-initial-admin-username '{{ satellite_admin_username }}'
+    --foreman-initial-admin-password '{{ satellite_admin_password }}'
   register: satellite_installer_output
   when:
     - "'Failed to open TCP connection' in hammer_output.stderr"

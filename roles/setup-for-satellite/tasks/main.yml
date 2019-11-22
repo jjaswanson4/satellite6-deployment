@@ -1,0 +1,5 @@
+---
+
+- import_tasks: pre-flight-tasks.yml
+- import_tasks: pre-flight-checklist.yml
+- import_tasks: configure-storage.yml

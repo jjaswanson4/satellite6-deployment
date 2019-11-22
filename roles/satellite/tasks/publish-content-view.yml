@@ -1,7 +1,7 @@
 ---
 
 - name: "publish content view version {{ content_view }} to the library"
-  katello_content_view_version:
+  theforeman.foreman.katello_content_view_version:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false

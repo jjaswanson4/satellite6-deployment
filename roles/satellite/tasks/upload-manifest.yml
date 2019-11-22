@@ -1,7 +1,7 @@
 ---
 
 - name: upload manifest to satellite
-  katello_manifest:
+  theforeman.foreman.katello_manifest:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false

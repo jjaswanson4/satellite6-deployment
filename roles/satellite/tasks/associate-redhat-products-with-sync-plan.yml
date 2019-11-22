@@ -5,20 +5,9 @@
   register: redhat_products
   changed_when: false
   check_mode: false
-#  foreman_search_facts:
-#    username: "{{ satellite_admin_username }}"
-#    password: "{{ satellite_admin_password }}"
-#    validate_certs: false
-#    server_url: "{{ satellite_url }}"
-#    resource: products
-#  register: products
-#  delegate_to: "{{ delegate_host }}"
-
-#- debug:
-#    msg: "{{ poducts }}"
 
 - name: set Red Hat products to sync plan
-  katello_product:
+  theforeman.foreman.katello_product:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false

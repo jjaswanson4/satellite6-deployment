@@ -1,21 +1,31 @@
 ---
 
+# vars for playbook function
+delegate_host: localhost
+im_ok_with_pip_from_epel: true
+
+# initial settings for satellite
 satellite_initial_organization: josh
 satellite_initial_location: msp-lab
 satellite_admin_username: admin
 satellite_admin_password: 'changeme'
 
-satellite_manifest_path: "{{ role_path }}files/josh-manifest.zip"
-
-satellite_install_repos:
+# settings for installing satellite rpms
+satellite_manifest_path: "{{ role_path }}/files/josh-manifest.zip"
+common_install_repos:
   - 'rhel-7-server-rpms'
   - 'rhel-server-rhscl-7-rpms'
-  - 'rhel-7-server-satellite-6.6-rpms'
   - 'rhel-7-server-satellite-maintenance-6-rpms'
   - 'rhel-7-server-ansible-2.8-rpms'
-
+satellite_repos:
+  - 'rhel-7-server-satellite-6.6-rpms'
+capsule_repos:
+  - 'rhel-7-server-satellite-capsule-6.6-rpms'
+install_repos: []
 satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
 
+# storage configuration for satellite
+# NOTE: if /var, /opt, and /usr are on one logical volume, comment them out below and adjust their size manually
 satellite_logical_volumes:
   cache:
     size: 20
@@ -51,6 +61,7 @@ satellite_logical_volumes:
     size: 12
     path: /var
 
+# satellite settings
 foreman_settings:
   - name: default_download_policy
     value: immediate
@@ -81,6 +92,7 @@ composite_content_views:
       - content_view: cv-server-rhel6
       - content_view: cv-softwarecollections-rhel6
       - content_view: cv-supplementary-rhel6
+      - content_view: cv-kickstart-rhel6.10
   composite-rhel7:
     description: 'rhel7 packages'
     content_views:
@@ -100,6 +112,7 @@ composite_content_views:
       - content_view: cv-server-rhel7
       - content_view: cv-softwarecollections-rhel7
       - content_view: cv-supplementary-rhel7
+      - content_view: cv-kickstart-rhel7.7
   composite-rhel8:
     description: 'rhel8 packages'
     content_views:
@@ -109,6 +122,7 @@ composite_content_views:
       - content_view: cv-ha-rhel8
       - content_view: cv-server-rhel8
       - content_view: cv-supplementary-rhel8
+      - content_view: cv-kickstart-rhel8.1
 
 lifecycle_environments:
   - name: test
@@ -339,6 +353,29 @@ content_views:
       - repo: Red Hat Ceph Storage Tools 3 for Red Hat Enterprise Linux 7 Server (RPMs)
         product: Red Hat Ceph Storage
         basearch: x86_64
+  cv-kickstart-rhel6.10:
+    repos:
+      - repo: Red Hat Enterprise Linux 6 Server (Kickstart)
+        product: Red Hat Enterprise Linux Server
+        basearch: x86_64
+        releasever: '6.10'
+  cv-kickstart-rhel7.7:
+    repos:
+      - repo: Red Hat Enterprise Linux 7 Server (Kickstart)
+        product: Red Hat Enterprise Linux Server
+        basearch: x86_64
+        releasever: '7.7'
+  cv-kickstart-rhel8.1:
+    repos:
+      - repo: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (Kickstart)
+        product: Red Hat Enterprise Linux for x86_64
+        basearch: x86_64
+        releasever: '8.1'
+      - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (Kickstart)
+        product: Red Hat Enterprise Linux for x86_64
+        basearch: x86_64
+        releasever: '8.1'
+
 
 activation_keys:
   ak-rhel7:
@@ -347,13 +384,16 @@ activation_keys:
   ak-rhel6:
     subscriptions:
       - subscription: Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
-#  ak-ceph7:
-#    subscriptions:
+  ak-ceph:
+    subscriptions:
   ak-standard:
     subscriptions:
   ak-josh7:
     subscriptions:
       - subscription: Extra Packages for Enterprise Linux 7
+  ak-openstack:
+    subscriptions:
+      - subscription: Red Hat OpenStack Platform, Premium (One Year, Enterprise Program)
 
 satellite_tuning_config_files:
   - name: dynflowd.j2

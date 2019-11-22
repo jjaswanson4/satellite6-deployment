@@ -1,7 +1,7 @@
 ---
 
 - name: create daily sync plan
-  katello_sync_plan:
+  theforeman.foreman.katello_sync_plan:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
