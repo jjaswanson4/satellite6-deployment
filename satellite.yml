@@ -7,12 +7,23 @@
   roles:
     - setup-for-satellite
 
+- name: install satellite
+  hosts:
+    - satellite
+  roles:
+    - install-satellite
 
-#  hosts:
-#    - satellite
-#  collections:
-#    - theforeman.foreman
-#  tasks:
-#    - import_role: 
-#        name: satellite
-#    - satellite
+- name: tune satellite
+  hosts:
+    - satellite
+  roles:
+    - tune-satellite
+
+- name: configure satellite
+  hosts:
+    - satellite
+  collections:
+    - theforeman.foreman
+  roles:
+    - satellite
+
