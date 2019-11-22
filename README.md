@@ -10,7 +10,8 @@ Update 11/22/2019:
 
 # Usage
 
-Configure most settings in roles/satellite/vars/main.yml
+Vars files should be placed in roles/satellite/vars. There should be one vars file per satellite server, named as such: roles/satellite/vars/hostname.vars.yml
+- An example vars file is located at roles/satellite/vars/satellite.vars.yml.example
 
 # Requirements
 
