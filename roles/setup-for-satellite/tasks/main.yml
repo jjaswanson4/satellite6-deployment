@@ -3,8 +3,3 @@
 - import_tasks: pre-flight-tasks.yml
 - import_tasks: pre-flight-checklist.yml
 - import_tasks: configure-storage.yml
-- import_tasks: remove-conflicting-rpms.yml
-  when:
-    - "'satellite' in group_names"
-- import_tasks: configure-repositories.yml
-- import_tasks: install-satellite-rpms.yml
