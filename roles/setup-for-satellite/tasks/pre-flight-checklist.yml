@@ -56,3 +56,16 @@
     msg: "system umask must be 0022"
   when:
     - current_umask.stdout != '0022'
+
+- name: check upstream dns
+  shell: dig "{{ ansible_fqdn }}"
+  register: dns_status
+  check_mode: false
+  failed_when: false
+  changed_when: false
+
+- name: fail on dns
+  fail:
+    msg: "upstream dns must be configured"
+  when:
+    - dns_status.rc | int != 0
