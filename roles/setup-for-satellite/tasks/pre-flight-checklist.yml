@@ -58,7 +58,7 @@
     - current_umask.stdout != '0022'
 
 - name: check upstream dns
-  shell: dig "{{ ansible_fqdn }}"
+  shell: ping -c 1 "{{ ansible_fqdn }}"
   register: dns_status
   check_mode: false
   failed_when: false
