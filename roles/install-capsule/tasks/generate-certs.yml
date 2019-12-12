@@ -10,8 +10,32 @@
 - name: generate capsule certificates
   shell: >-
     capsule-certs-generate
-    --forman-proxy-fqdn "{{ ansible_fqdn }}"
-    --certs-tar "/root/capsule-certificates/{{ inventory_hostname }}.tar"
+    --foreman-proxy-fqdn "{{ ansible_fqdn }}"
+    --certs-tar "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
     --foreman-proxy-cname "{{ satellite_loadbalanced_dns }}"
   register: cert_generate_output
   delegate_to: "{{ parent_satellite }}"
+  when:
+    - generate_certs.changed
+
+- name: set foreman-proxy-oauth-consumer-key fact
+  set_fact:
+    foreman_proxy_oauth_consumer_key: "{{ line.split('\"')[1] | regex_replace('\','') }}"
+  when:
+    - generate_certs.changed
+    - line | regex_search('foreman-proxy-oauth-consumer-key')
+  loop_control:
+    loop_var: line
+  with_items:
+    - "{{ cert_generate_output.stdout_lines }}"
+
+- name: set foreman-proxy-oauth-consumer-secret fact
+  set_fact:
+    foreman_proxy_oauth_consumer_secret: "{{ line.split('\"')[1] | regex_replace('\','') }}"
+  when:
+    - generate_certs.changed
+    - line | regex_search('foreman-proxy-oauth-consumer-secret')
+  loop_control:
+    loop_var: line
+  with_items:
+    - "{{ cert_generate_output.stdout_lines }}"
