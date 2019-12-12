@@ -1,0 +1,6 @@
+---
+
+- name: install packages for capsule
+  yum:
+    name: satellite-capsule
+    state: present

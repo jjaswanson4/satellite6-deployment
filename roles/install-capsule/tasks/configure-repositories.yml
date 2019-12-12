@@ -1,0 +1,28 @@
+---
+
+- name: enable install repos
+  rhsm_repository:
+    name: "{{ repo }}"
+    state: enabled
+  loop_control:
+    loop_var: repo
+  loop:
+    - "{{ common_install_repos + capsule_repos }}"
+
+- name: get other enabled repos
+  shell: subscription-manager repos --list-enabled | grep 'Repo ID' | awk '{print $3}'
+  register: enabled_repos
+  changed_when: false
+  check_mode: false
+
+- name: disable unneeded repos
+  rhsm_repository:
+    name: "{{ repo }}"
+    state: disabled
+  when:
+    - repo not in common_install_repos
+    - repo not in capsule_repos
+  loop_control:
+    loop_var: repo
+  with_items:
+    - "{{ enabled_repos.stdout_lines }}"
