@@ -1,0 +1,23 @@
+---
+
+- name: run the capsule installer
+  shell: >-
+    satellite-installer
+    --scenario capsule
+    --foreman-proxy-content-parent-fqdn "https://{{ parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --foreman-proxy-register-in-foreman "true"
+    --foreman-proxy-foreman-base-url "https://{{ parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --foreman-proxy-trusted-hosts "{{ parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --foreman-proxy-trusted-hosts "{{ ansible_fqdn }}"
+    --foreman-proxy-oauth-consumer-key "{{ foreman_proxy_oauth_consumer_key }}"
+    --foreman-proxy-oauth-consumer-secret "{{ foreman_proxy_oauth_consumer_secret }}"
+    --puppet-server-foreman-url "https://{{ parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --certs-cname "{{ satellite_loadbalanced_dns }}"
+    --puppet-dns-alt-names "{{ satellite_loadbalanced_dns }}"
+    --puppet-ca-server "{{ ansible_fqdn }}"
+    --foreman-proxy-puppetca "true"
+    --puppet-server-ca "true"
+    --enable-foreman-proxy-plugin-remote-execution-ssh
+  register: capsule_installer_output
+  when:
+    - generate_certs.changed
