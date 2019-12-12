@@ -18,6 +18,7 @@
     --foreman-proxy-puppetca "true"
     --puppet-server-ca "true"
     --enable-foreman-proxy-plugin-remote-execution-ssh
+    --certs-tar-file "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
   register: capsule_installer_output
   when:
     - generate_certs.changed

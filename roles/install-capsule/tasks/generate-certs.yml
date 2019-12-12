@@ -18,6 +18,29 @@
   when:
     - generate_certs.changed
 
+- name: grab certs from satellite
+  fetch:
+    src: "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
+    dest: /tmp/
+    flat: yes
+  delegate_to: "{{ parent_satellite }}"
+  when:
+    - generate_certs.changed
+
+- name: create certs dir on capsule
+  file:
+    path: "/root/capsule-certificates/{{ inventory_hostname }}"
+    state: directory
+  when:
+    - generate_certs.changed
+
+- name: copy certs to capsule
+  copy:
+    src: "/tmp/{{ inventory_hostname }}-capsule-certs.tar"
+    dest: "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
+  when:
+    - generate_certs.changed
+
 - name: set foreman-proxy-oauth-consumer-key fact
   set_fact:
     foreman_proxy_oauth_consumer_key: "{{ line.split('\"')[1] | regex_replace('\','') }}"
