@@ -11,6 +11,7 @@ satellite_admin_password: 'changeme'
 
 # settings for capsules
 parent_satellite: satellite01
+satellite_loadbalanced_dns: satellite66.josh.lab.msp.redhat.com
 
 # settings for installing satellite rpms
 satellite_manifest_path: "{{ role_path }}/files/josh-manifest.zip"
