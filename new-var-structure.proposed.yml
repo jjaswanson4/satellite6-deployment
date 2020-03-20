@@ -28,6 +28,17 @@ satellite:
         - name: msp-lab
           initial_location: true
         - name: msp-lab-2
+#     Maybe tweak for more clear handling of multiple lifecycle environment paths?
+      lifecycle_environments:
+        - name: test
+          description: wild west
+          prior: Library
+        - name: stage
+          description: dont test in prod
+          prior: test
+        - name: prod
+          description: big leagues
+          prior: stage
       content_views:
         cv-appstream-rhel8:
           description: appstream for rhel8
@@ -59,16 +70,6 @@ satellite:
         composite-rhel8:
             - cv-server-rhel8
             - cv-ansible-rhel8
-      lifecycle_environments:
-        test:
-          description: wild west
-          prior: Library
-        stage:
-          description: dont test in prod
-          prior: test
-        prod:
-          description: big leagues
-          prior: stage
       activation_keys:
         ak_rhel7:
           subscriptions:
@@ -79,6 +80,16 @@ satellite:
       locations:
         - name: josh1
         - name: josh2
+      lifecycle_environments:
+        - name: dev
+          description: dev land
+          prior: Library
+        - name: QA
+          description: before prod
+          prior: dev
+        - name: prod
+          description: big leagues
+          prior: QA
       content_views:
         cv-appstream-rhel8:
           description: appstream for rhel8
@@ -110,16 +121,6 @@ satellite:
         composite-rhel8:
             - cv-server-rhel8
             - cv-ansible-rhel8
-      lifecycle_environments:
-        test:
-          description: wild west
-          prior: Library
-        stage:
-          description: dont test in prod
-          prior: test
-        prod:
-          description: big leagues
-          prior: stage
       activation_keys:
         ak_rhel7:
           subscriptions:
