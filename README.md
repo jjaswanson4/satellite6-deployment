@@ -1,6 +1,11 @@
 # Josh's Satellite 6.x Deployment Playbook
 
+##### THIS BRANCH IS NOT STABLE #####
+
 This playbook converts a standard RHEL server into a satellite server. It handles mount points, tuning, packages, repos, and configurations. 
+
+Update 03/20/2020:
+- Rearchitect vars structure
 
 Update 11/22/2019:
 - Ansible collections now supported
