@@ -10,30 +10,97 @@ satellite:
         - msp-lab-2
       content_views:
         cv-appstream-rhel8:
+          description: appstream for rhel8
           repos:
-            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
-              product: Red Hat Enterprise Linux for x86_64
-              releasever: 8
+            - rhel-8-for-x86_64-appstream-rpms
         cv-ansible-rhel8:
           description: ansible on RHEL8
           repos:
-            - repo: Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)
-              product: Red Hat Ansible Engine
-            - repo: Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)
-              product: Red Hat Ansible Engine
+            - ansible-2-for-rhel-8-x86_64-rpms
+            - ansible-2.8-for-rhel-8-x86_64-rpms
         cv-ansible-rhel7:
           description: ansible on RHEL7
           repos:
-            - repo: Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server
-              product: Red Hat Ansible Engine
-              basearch: x86_64
-            - repo: Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server
-              product: Red Hat Ansible Engine
-              basearch: x86_64
-            - repo: Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server
-              product: Red Hat Ansible Engine
-              basearch: x86_64
+            - rhel-7-server-ansible-2.8-rpms
+            - rhel-7-server-ansible-2-rpms
+        cv-server-rhel7:
+          repos:
+            - rhel-7-server-rpms
+            - rhel-7-server-satellite-tools-6.6-rpms
+        cv-server-rhel8:
+          repos:
+            - rhel-8-for-x86_64-baseos-rpms
+            - satellite-tools-6.6-for-rhel-8-x86_64-rpms
+      composite_content_views:
+        composite-rhel7:
+          content_views:
+            - cv-ansible-rhel7
+            - cv-server-rhel7
+        composite-rhel8:
+            - cv-server-rhel8
+            - cv-ansible-rhel8
+      lifecycle_environments:
+        test:
+          description: wild west
+          prior: Library
+       stage:
+          description: dont test in prod
+          prior: test
+        prod:
+          description: big leagues
+          prior: stage
+      activation_keys:
+        ak_rhel7:
+          subscriptions:
+            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
     - name: josh
       state: present
       manifest: /path/to/manifest
-     
+      locations:
+        - josh1
+        - josh2
+      content_views:
+        cv-appstream-rhel8:
+          description: appstream for rhel8
+          repos:
+            - rhel-8-for-x86_64-appstream-rpms
+        cv-ansible-rhel8:
+          description: ansible on RHEL8
+          repos:
+            - ansible-2-for-rhel-8-x86_64-rpms
+            - ansible-2.8-for-rhel-8-x86_64-rpms
+        cv-ansible-rhel7:
+          description: ansible on RHEL7
+          repos:
+            - rhel-7-server-ansible-2.8-rpms
+            - rhel-7-server-ansible-2-rpms
+        cv-server-rhel7:
+          repos:
+            - rhel-7-server-rpms
+            - rhel-7-server-satellite-tools-6.6-rpms
+        cv-server-rhel8:
+          repos:
+            - rhel-8-for-x86_64-baseos-rpms
+            - satellite-tools-6.6-for-rhel-8-x86_64-rpms
+      composite_content_views:
+        composite-rhel7:
+          content_views:
+            - cv-ansible-rhel7
+            - cv-server-rhel7
+        composite-rhel8:
+            - cv-server-rhel8
+            - cv-ansible-rhel8
+      lifecycle_environments:
+        test:
+          description: wild west
+          prior: Library
+       stage:
+          description: dont test in prod
+          prior: test
+        prod:
+          description: big leagues
+          prior: stage
+      activation_keys:
+        ak_rhel7:
+          subscriptions:
+            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
