@@ -10,7 +10,6 @@
     value: "{{ setting.value }}"
   loop_control:
     loop_var: setting
-  with_items:
-    - "{{ foreman_settings }}"
+  loop: "{{ satellite.foreman_settings }}"
   delegate_to: "{{ delegate_host }}"
 

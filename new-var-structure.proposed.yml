@@ -12,6 +12,13 @@ install_repos: []
 satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
 
 satellite:
+  foreman_settings:
+    - name: default_download_policy
+      value: immediate
+    - name: default_proxy_download_policy
+      value: immediate
+    - name: unregister_delete_host
+      value: true
   organizations:
     - name: general
       initial_organization: true

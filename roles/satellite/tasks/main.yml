@@ -4,7 +4,7 @@
 - import_tasks: create-organizations.yml
 - import_tasks: create-locations.yml
 - import_tasks: upload-manifest.yml
-#- import_tasks: set-foreman-settings.yml
+- import_tasks: set-foreman-settings.yml
 #- import_tasks: create-lifecycle-environments.yml
 #- import_tasks: enable-redhat-repos.yml
 #- import_tasks: create-content-credentials.yml
