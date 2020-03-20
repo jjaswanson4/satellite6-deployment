@@ -6,7 +6,7 @@
 - import_tasks: upload-manifest.yml
 - import_tasks: set-foreman-settings.yml
 - import_tasks: create-lifecycle-environments.yml
-#- import_tasks: enable-redhat-repos.yml
+- import_tasks: enable-redhat-repos.yml
 #- import_tasks: create-content-credentials.yml
 #- import_tasks: create-sync-plan.yml
 #- import_tasks: create-custom-products.yml

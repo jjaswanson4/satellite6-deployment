@@ -1,5 +1,12 @@
 ---
 
+- debug:
+    msg: "{{ item }}"
+  loop: "{{ satellite | json_query('organizations[*].content_views[*].repos') }}"
+
+- fail:
+
+
 - name: enable Red Hat repos
   theforeman.foreman.katello_repository_set:
     username: "{{ satellite_admin_username }}"

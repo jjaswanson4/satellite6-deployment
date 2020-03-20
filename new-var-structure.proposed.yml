@@ -40,25 +40,25 @@ satellite:
           description: big leagues
           prior: stage
       content_views:
-        cv-appstream-rhel8:
+        - name: cv-appstream-rhel8
           description: appstream for rhel8
           repos:
             - rhel-8-for-x86_64-appstream-rpms
-        cv-ansible-rhel8:
+        - name: cv-ansible-rhel8
           description: ansible on RHEL8
           repos:
             - ansible-2-for-rhel-8-x86_64-rpms
             - ansible-2.8-for-rhel-8-x86_64-rpms
-        cv-ansible-rhel7:
+        - name: cv-ansible-rhel7
           description: ansible on RHEL7
           repos:
             - rhel-7-server-ansible-2.8-rpms
             - rhel-7-server-ansible-2-rpms
-        cv-server-rhel7:
+        - name: cv-server-rhel7
           repos:
             - rhel-7-server-rpms
             - rhel-7-server-satellite-tools-6.6-rpms
-        cv-server-rhel8:
+        - name: cv-server-rhel8
           repos:
             - rhel-8-for-x86_64-baseos-rpms
             - satellite-tools-6.6-for-rhel-8-x86_64-rpms
@@ -91,25 +91,25 @@ satellite:
           description: big leagues
           prior: QA
       content_views:
-        cv-appstream-rhel8:
+        - name: cv-appstream-rhel8
           description: appstream for rhel8
           repos:
             - rhel-8-for-x86_64-appstream-rpms
-        cv-ansible-rhel8:
+        - name: cv-ansible-rhel8
           description: ansible on RHEL8
           repos:
             - ansible-2-for-rhel-8-x86_64-rpms
             - ansible-2.8-for-rhel-8-x86_64-rpms
-        cv-ansible-rhel7:
+        - name: cv-ansible-rhel7
           description: ansible on RHEL7
           repos:
             - rhel-7-server-ansible-2.8-rpms
             - rhel-7-server-ansible-2-rpms
-        cv-server-rhel7:
+        - name: cv-server-rhel7
           repos:
             - rhel-7-server-rpms
             - rhel-7-server-satellite-tools-6.6-rpms
-        cv-server-rhel8:
+        - name: cv-server-rhel8
           repos:
             - rhel-8-for-x86_64-baseos-rpms
             - satellite-tools-6.6-for-rhel-8-x86_64-rpms
