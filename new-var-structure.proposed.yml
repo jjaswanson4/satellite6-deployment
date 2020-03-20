@@ -1,0 +1,39 @@
+---
+
+satellite:
+  orgs:
+    - name: general
+      state: present
+      manifest: /path/to/manifest
+      locations:
+        - msp-lab
+        - msp-lab-2
+      content_views:
+        cv-appstream-rhel8:
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+        cv-ansible-rhel8:
+          description: ansible on RHEL8
+          repos:
+            - repo: Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+            - repo: Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+        cv-ansible-rhel7:
+          description: ansible on RHEL7
+          repos:
+            - repo: Red Hat Ansible Engine 2.8 RPMs for Red Hat Enterprise Linux 7 Server
+              product: Red Hat Ansible Engine
+              basearch: x86_64
+            - repo: Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server
+              product: Red Hat Ansible Engine
+              basearch: x86_64
+            - repo: Red Hat Ansible Engine 2 RPMs for Red Hat Enterprise Linux 7 Server
+              product: Red Hat Ansible Engine
+              basearch: x86_64
+    - name: josh
+      state: present
+      manifest: /path/to/manifest
+     
