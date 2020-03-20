@@ -68,7 +68,7 @@ satellite:
             - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
     - name: josh
       state: present
-      manifest: /tmp/manifest_satellite-building-testmanifest_20200320T193207Z.zip
+      manifest: /tmp/manifest_satellite-building-testmanifest2_20200320T204013Z.zip
       locations:
         - name: josh1
         - name: josh2

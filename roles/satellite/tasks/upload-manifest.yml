@@ -6,7 +6,8 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
+    organization: "{{ item.name }}"
     state: present
-    manifest_path: "{{ satellite_manifest_path }}"
+    manifest_path: "{{ item.manifest }}"
+  loop: "{{ satellite.organizations }}"
   delegate_to: "{{ delegate_host }}"
