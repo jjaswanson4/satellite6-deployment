@@ -1,16 +1,18 @@
 ---
 
 - import_tasks: pre-flight-tasks.yml
-- import_tasks: upload-manifest.yml
-- import_tasks: set-foreman-settings.yml
-- import_tasks: create-lifecycle-environments.yml
-- import_tasks: enable-redhat-repos.yml
-- import_tasks: create-content-credentials.yml
-- import_tasks: create-sync-plan.yml
-- import_tasks: create-custom-products.yml
-- import_tasks: associate-redhat-products-with-sync-plan.yml
-- import_tasks: create-repos-for-custom-products.yml
-- import_tasks: sync-repos.yml
-- import_tasks: setup-content-views.yml
-- import_tasks: setup-composite-content-views.yml
-- import_tasks: create-activation-keys.yml
+- import_tasks: create-organizations.yml
+- import_tasks: create-locations.yml
+#- import_tasks: upload-manifest.yml
+#- import_tasks: set-foreman-settings.yml
+#- import_tasks: create-lifecycle-environments.yml
+#- import_tasks: enable-redhat-repos.yml
+#- import_tasks: create-content-credentials.yml
+#- import_tasks: create-sync-plan.yml
+#- import_tasks: create-custom-products.yml
+#- import_tasks: associate-redhat-products-with-sync-plan.yml
+#- import_tasks: create-repos-for-custom-products.yml
+#- import_tasks: sync-repos.yml
+#- import_tasks: setup-content-views.yml
+#- import_tasks: setup-composite-content-views.yml
+#- import_tasks: create-activation-keys.yml

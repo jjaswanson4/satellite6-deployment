@@ -16,7 +16,7 @@ satellite:
     - name: general
       initial_organization: true
       state: present
-      manifest: /path/to/manifest
+      manifest: /tmp/manifest_satellite-building-testmanifest_20200320T193207Z.zip
       locations:
         - name: msp-lab
           initial_location: true
@@ -68,10 +68,10 @@ satellite:
             - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
     - name: josh
       state: present
-      manifest: /path/to/manifest
+      manifest: /tmp/manifest_satellite-building-testmanifest_20200320T193207Z.zip
       locations:
-        - josh1
-        - josh2
+        - name: josh1
+        - name: josh2
       content_views:
         cv-appstream-rhel8:
           description: appstream for rhel8

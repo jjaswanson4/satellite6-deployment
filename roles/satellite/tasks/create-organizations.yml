@@ -1,0 +1,12 @@
+---
+
+- name: create satellite organizations
+  theforeman.foreman.foreman_organization:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ satellite.organizations }}"
+  delegate_to: "{{ delegate_host }}"
