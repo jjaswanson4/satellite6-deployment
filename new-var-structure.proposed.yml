@@ -3,10 +3,12 @@
 satellite:
   orgs:
     - name: general
+      initial_org: true
       state: present
       manifest: /path/to/manifest
       locations:
         - msp-lab
+          initial_location: true
         - msp-lab-2
       content_views:
         cv-appstream-rhel8:
