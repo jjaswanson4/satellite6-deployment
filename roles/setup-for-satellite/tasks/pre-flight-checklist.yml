@@ -41,9 +41,9 @@
 
 - name: check disk space
   fail:
-    msg: "{{ ansible_facts['lvm']['lvs']['var']['vg'] }} does not have enough space"
+    msg: "Volume group '{{ ansible_facts['lvm']['lvs']['var']['vg'] }}' does not have enough space"
   when:
-    - disk_space.stdout | int < 1500
+    - disk_space.stdout | int < 500
 
 - name: get current umask
   shell: umask

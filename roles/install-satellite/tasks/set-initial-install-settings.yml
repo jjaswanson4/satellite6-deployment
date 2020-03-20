@@ -1,0 +1,13 @@
+---
+
+- name: set initial satellite settings
+  set_fact:
+    satellite_initial_organization: "{{ item.0.name }}"
+    satellite_initial_location: "{{ item.1.name }}"
+  when:
+    - item.0.initial_organization is defined
+    - item.0.initial_organization
+    - item.1.initial_location is defined
+    - item.1.initial_location
+  loop: "{{ satellite.organizations | subelements('locations') }}"
+  

@@ -1,15 +1,26 @@
 ---
+common_install_repos:
+  - rhel-7-server-rpms
+  - rhel-server-rhscl-7-rpms
+  - rhel-7-server-satellite-maintenance-6-rpms
+  - rhel-7-server-ansible-2.8-rpms
+satellite_repos:
+  - rhel-7-server-satellite-6.6-rpms
+capsule_repos:
+  - rhel-7-server-satellite-capsule-6.6-rpms
+install_repos: []
+satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
 
 satellite:
-  orgs:
+  organizations:
     - name: general
-      initial_org: true
+      initial_organization: true
       state: present
       manifest: /path/to/manifest
       locations:
-        - msp-lab
+        - name: msp-lab
           initial_location: true
-        - msp-lab-2
+        - name: msp-lab-2
       content_views:
         cv-appstream-rhel8:
           description: appstream for rhel8
@@ -45,7 +56,7 @@ satellite:
         test:
           description: wild west
           prior: Library
-       stage:
+        stage:
           description: dont test in prod
           prior: test
         prod:
@@ -96,7 +107,7 @@ satellite:
         test:
           description: wild west
           prior: Library
-       stage:
+        stage:
           description: dont test in prod
           prior: test
         prod:
