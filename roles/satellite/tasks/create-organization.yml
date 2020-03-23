@@ -1,12 +1,11 @@
 ---
 
-- name: create satellite organizations
+- name: "set satellite organization {{ organization.name }} to state {{ organization.state }}"
   theforeman.foreman.foreman_organization:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-  loop: "{{ satellite.organizations }}"
+    name: "{{ organization.name }}"
+    state: "{{ organization.state }}"
   delegate_to: "{{ delegate_host }}"

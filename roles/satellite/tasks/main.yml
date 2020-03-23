@@ -1,7 +1,7 @@
 ---
 
 #- import_tasks: pre-flight-tasks.yml
-#- import_tasks: create-organizations.yml
+- import_tasks: create-organization.yml
 #- import_tasks: create-locations.yml
 #- import_tasks: upload-manifest.yml
 #- import_tasks: set-foreman-settings.yml
@@ -12,8 +12,8 @@
 #  loop_control:
 #    loop_var: organization
 #  loop: "{{ satellite.organizations }}" 
-- import_tasks: debug.yml
-- import_tasks: enable-redhat-repos.yml
+#- import_tasks: debug.yml
+#- import_tasks: enable-redhat-repos.yml
 #- import_tasks: create-content-credentials.yml
 #- import_tasks: create-sync-plan.yml
 #- import_tasks: create-custom-products.yml
