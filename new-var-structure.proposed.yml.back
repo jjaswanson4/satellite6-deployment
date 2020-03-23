@@ -40,22 +40,31 @@ satellite:
           description: big leagues
           prior: stage
       content_views:
-        cv-ansible-rhel7:
+        - name: cv-appstream-rhel8
+          description: appstream for rhel8
+          repos:
+            - name: rhel-8-for-x86_64-appstream-rpms
+              releasever: 8
+        - name: cv-ansible-rhel8
+          description: ansible on RHEL8
+          repos:
+            - name: ansible-2-for-rhel-8-x86_64-rpms
+            - name: ansible-2.8-for-rhel-8-x86_64-rpms
+        - name: cv-ansible-rhel7
           description: ansible on RHEL7
           repos:
-            rhel-7-server-ansible-2.8-rpms:
-              - basearch: x86_64
-            rhel-7-server-ansible-2-rpms:
-              - basearch: x86_64
-        cv-server-rhel7:
+            - name: rhel-7-server-ansible-2.8-rpms
+              basearch: x86_64
+            - name: rhel-7-server-ansible-2-rpms
+              basearch: x86_64
+        - name: cv-server-rhel7
           repos:
-            rhel-7-server-rpms:
-              - releasever: 7Server
-                basearch: x86_64
-              - releasever: 7.7
-                basearch: x86_64
-            rhel-7-server-satellite-tools-6.6-rpms:
-              - basearch: x86_64
+            - rhel-7-server-rpms
+            - rhel-7-server-satellite-tools-6.6-rpms
+        - name: cv-server-rhel8
+          repos:
+            - rhel-8-for-x86_64-baseos-rpms
+            - satellite-tools-6.6-for-rhel-8-x86_64-rpms
       composite_content_views:
         composite-rhel7:
           content_views:
@@ -85,16 +94,25 @@ satellite:
           description: big leagues
           prior: QA
       content_views:
-        cv-server-rhel7:
+        - name: cv-appstream-rhel8
+          description: appstream for rhel8
           repos:
-            rhel-7-server-rpms:
-              - releasever: 7Server
-                basearch: x86_64
-              - releasever: 7.7
-                basearch: x86_64
-            rhel-7-server-satellite-tools-6.6-rpms:
-              - basearch: x86_64
-        cv-server-rhel8:
+            - rhel-8-for-x86_64-appstream-rpms
+        - name: cv-ansible-rhel8
+          description: ansible on RHEL8
+          repos:
+            - ansible-2-for-rhel-8-x86_64-rpms
+            - ansible-2.8-for-rhel-8-x86_64-rpms
+        - name: cv-ansible-rhel7
+          description: ansible on RHEL7
+          repos:
+            - rhel-7-server-ansible-2.8-rpms
+            - rhel-7-server-ansible-2-rpms
+        - name: cv-server-rhel7
+          repos:
+            - rhel-7-server-rpms
+            - rhel-7-server-satellite-tools-6.6-rpms
+        - name: cv-server-rhel8
           repos:
             - rhel-8-for-x86_64-baseos-rpms
             - satellite-tools-6.6-for-rhel-8-x86_64-rpms
