@@ -1,13 +1,12 @@
 ---
 
-- name: upload manifest to satellite
+- name: "upload manifest {{ organization.manifest }} to satellite organization {{ organization.name }}"
   theforeman.foreman.katello_manifest:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ item.name }}"
+    organization: "{{ organization.name }}"
     state: present
-    manifest_path: "{{ item.manifest }}"
-  loop: "{{ satellite.organizations }}"
+    manifest_path: "{{ organization.manifest }}"
   delegate_to: "{{ delegate_host }}"
