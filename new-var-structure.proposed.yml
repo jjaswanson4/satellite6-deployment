@@ -40,22 +40,23 @@ satellite:
           description: big leagues
           prior: stage
       content_views:
-        cv-ansible-rhel7:
+        - name: cv-ansible-rhel7
           description: ansible on RHEL7
           repos:
-            rhel-7-server-ansible-2.8-rpms:
-              - basearch: x86_64
-            rhel-7-server-ansible-2-rpms:
-              - basearch: x86_64
-        cv-server-rhel7:
+            - label: rhel-7-server-ansible-2.8-rpms
+              basearch: x86_64
+            - label: rhel-7-server-ansible-2-rpms
+              basearch: x86_64
+        - name: cv-server-rhel7
           repos:
-            rhel-7-server-rpms:
-              - releasever: 7Server
-                basearch: x86_64
-              - releasever: 7.7
-                basearch: x86_64
-            rhel-7-server-satellite-tools-6.6-rpms:
-              - basearch: x86_64
+            - label: rhel-7-server-rpms
+              releasever: 7Server
+              basearch: x86_64
+            - label: rhel-7-server-rpms
+              releasever: '7.7'
+              basearch: x86_64
+            - label: rhel-7-server-satellite-tools-6.6-rpms
+              basearch: x86_64
       composite_content_views:
         composite-rhel7:
           content_views:
@@ -85,19 +86,16 @@ satellite:
           description: big leagues
           prior: QA
       content_views:
-        cv-server-rhel7:
+        - name: cv-server-rhel7
           repos:
-            rhel-7-server-rpms:
-              - releasever: 7Server
-                basearch: x86_64
-              - releasever: 7.7
-                basearch: x86_64
-            rhel-7-server-satellite-tools-6.6-rpms:
-              - basearch: x86_64
-        cv-server-rhel8:
-          repos:
-            - rhel-8-for-x86_64-baseos-rpms
-            - satellite-tools-6.6-for-rhel-8-x86_64-rpms
+            - label: rhel-7-server-rpms
+              releasever: 7Server
+              basearch: x86_64
+            - label: rhel-7-server-rpms
+              releasever: 7.7
+              basearch: x86_64
+            - label: rhel-7-server-satellite-tools-6.6-rpms
+              basearch: x86_64
       composite_content_views:
         composite-rhel7:
           content_views:

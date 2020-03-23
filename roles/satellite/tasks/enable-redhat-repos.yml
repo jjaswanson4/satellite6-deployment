@@ -1,10 +1,20 @@
 ---
 
-- debug:
-    msg: "{{ item }}"
-  loop: "{{ satellite | json_query('organizations[*].content_views[*].repos') }}"
+#- debug:
+#    msg: "{{ item.0.name }} {{ item.1.repos.label }}"
+#    msg: "{{ item.0.name }} {{ item.1.label }}"
+#  with_dict: "{{ satellite.organizations }}"
+#  loop: "{{ satellite | dict2items }}"
+#  loop: "{{ satellite.organizations | subelements(satellite | json_query('organizations[*].content_views') | items2dict) }}"
+#  loop: "{{ satellite | json_query('organizations[*].content_views') }}"
+#  loop: "{{ satellite.organizations | subelements(satellite | json_query('organizations[*].content_views[*].)) }}"
+#  loop: "{{ satellite.organizations }}"
 
-- fail:
+# | subelements('content_views') }}"
+
+# | subelements('content_views') }}"
+
+#- fail:
 
 
 - name: enable Red Hat repos
@@ -13,15 +23,12 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
-    name: "{{ repo.1.repo }}"
-    product: "{{ repo.1.product }}"
+    organization: "{{ organization.name }}"
+    label: "{{ item.1.label }}"
     repositories:
-    - releasever: "{{ repo.1.releasever | default(omit) }}"
-      basearch: "{{ repo.1.basearch | default(omit) }}"
+    - releasever: "{{ item.1.releasever | default(omit) }}"
+      basearch: "{{ item.1.basearch | default(omit) }}"
   when:
     - repo.1.content_credential is not defined
-  loop_control:
-    loop_var: repo
-  loop: "{{ content_views | subelements('repos') }}"
+  loop: "{{ organization.content_views | subelements('repos') }}"
   delegate_to: "{{ delegate_host }}"
