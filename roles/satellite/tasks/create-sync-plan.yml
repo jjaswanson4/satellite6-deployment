@@ -6,9 +6,9 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
+    organization: "{{ organization.name }}"
     name: "daily"
     interval: "daily"
     enabled: true
-    sync_date: "2019-01-01 00:00:00 UTC"
+    sync_date: "2020-01-01 00:00:00 UTC"
   delegate_to: "{{ delegate_host }}"
