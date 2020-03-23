@@ -12,6 +12,6 @@
     - releasever: "{{ item.1.releasever | default(omit) }}"
       basearch: "{{ item.1.basearch | default(omit) }}"
   when:
-    - repo.1.content_credential is not defined
+    - item.1.label is defined
   loop: "{{ organization.content_views | subelements('repos') }}"
   delegate_to: "{{ delegate_host }}"
