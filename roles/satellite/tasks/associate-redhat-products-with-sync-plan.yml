@@ -1,7 +1,7 @@
 ---
 
 - name: get enabled Red Hat products
-  shell: hammer --csv repository list | cut -d ',' -f 3 | sort --unique | grep -v '^Product$'
+  shell: hammer --csv repository list --organization "{{ organization.name }}" | cut -d ',' -f 3 | sort --unique | grep -v '^Product$'
   register: redhat_products
   changed_when: false
   check_mode: false
@@ -12,7 +12,7 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
+    organization: "{{ organization.name }}"
     name: "{{ product }}"
     sync_plan: daily
   loop_control:
