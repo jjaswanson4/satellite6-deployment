@@ -6,13 +6,13 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
+    organization: "{{ organization.name }}"
     name: "{{ product.1.product }}"
     gpg_key: "{{ product.1.content_credential_name }}"
     sync_plan: daily
   when:
-    - product.1.content_credential is defined
+    - product.1.product is defined
   loop_control:
     loop_var: product
-  loop: "{{ content_views | subelements('repos') }}"
+  loop: "{{ organization.content_views | subelements('repos') }}"
   delegate_to: "{{ delegate_host }}"
