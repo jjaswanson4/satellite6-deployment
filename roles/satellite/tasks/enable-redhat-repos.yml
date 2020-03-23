@@ -1,23 +1,6 @@
 ---
 
-#- debug:
-#    msg: "{{ item.0.name }} {{ item.1.repos.label }}"
-#    msg: "{{ item.0.name }} {{ item.1.label }}"
-#  with_dict: "{{ satellite.organizations }}"
-#  loop: "{{ satellite | dict2items }}"
-#  loop: "{{ satellite.organizations | subelements(satellite | json_query('organizations[*].content_views') | items2dict) }}"
-#  loop: "{{ satellite | json_query('organizations[*].content_views') }}"
-#  loop: "{{ satellite.organizations | subelements(satellite | json_query('organizations[*].content_views[*].)) }}"
-#  loop: "{{ satellite.organizations }}"
-
-# | subelements('content_views') }}"
-
-# | subelements('content_views') }}"
-
-#- fail:
-
-
-- name: enable Red Hat repos
+- name: "enable Red Hat repos in organization {{ organization.name }}"
   theforeman.foreman.katello_repository_set:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
