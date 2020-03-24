@@ -7,11 +7,14 @@
     validate_certs: false
     server_url: "{{ satellite_url }}"
     organization: "{{ organization.name }}"
-    label: "{{ item.1.label }}"
+    name: "{{ repo.1.repo }}"
+    product: "{{ repo.1.product }}"
     repositories:
-    - releasever: "{{ item.1.releasever | default(omit) }}"
-      basearch: "{{ item.1.basearch | default(omit) }}"
+    - releasever: "{{ repo.1.releasever | default(omit) }}"
+      basearch: "{{ repo.1.basearch | default(omit) }}"
   when:
-    - item.1.label is defined
+    - repo.1.content_credential is not defined
+  loop_control:
+    loop_var: repo
   loop: "{{ organization.content_views | subelements('repos') }}"
   delegate_to: "{{ delegate_host }}"
