@@ -1,6 +1,0 @@
----
-
-- name: grab vars for each host independently
-  include_vars:
-#    file: "{{ role_path }}/vars/{{ inventory_hostname }}.vars.yml"
-    file: /home/jswanson/satellite6.6-dev-rearchitect/new-var-structure.proposed.yml 
