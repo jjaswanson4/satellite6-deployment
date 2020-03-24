@@ -40,23 +40,40 @@ satellite:
           description: big leagues
           prior: stage
       content_views:
-        - name: cv-ansible-rhel7
-          description: ansible on RHEL7
+#       To create "custom" products, repos, and content credentials, use the following instead of label/basearch/releasever
+        - name: cv-epel-rhel7
           repos:
-            - label: rhel-7-server-ansible-2.8-rpms
-              basearch: x86_64
-            - label: rhel-7-server-ansible-2-rpms
-              basearch: x86_64
+            - repo: "Extra Packages for Enterprise Linux 7 Repository"
+              repo_url: "http://download.fedoraproject.org/pub/epel/7/x86_64"
+              product: "Extra Packages for Enterprise Linux 7"
+              content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
+              content_credential_name: "cc-epel7"
+#        - name: cv-ansible-rhel7
+#          description: ansible on RHEL7
+#          repos:
+#            - label: rhel-7-server-ansible-2.8-rpms
+#              basearch: x86_64
+#            - label: rhel-7-server-ansible-2-rpms
+#              basearch: x86_64
         - name: cv-server-rhel7
           repos:
-            - label: rhel-7-server-rpms
-              releasever: 7Server
-              basearch: x86_64
-            - label: rhel-7-server-rpms
-              releasever: '7.7'
-              basearch: x86_64
-            - label: rhel-7-server-satellite-tools-6.6-rpms
-              basearch: x86_64
+            - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
+              product: "Red Hat Enterprise Linux Server"
+              releasever: "7Server"
+              basearch: "x86_64"
+            - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
+              product: "Red Hat Enterprise Linux Server"
+              basearch: "x86_64"
+#
+#
+#            - label: rhel-7-server-rpms
+#              releasever: 7Server
+#              basearch: x86_64
+#            - label: rhel-7-server-rpms
+#              releasever: '7.7'
+#              basearch: x86_64
+#            - label: rhel-7-server-satellite-tools-6.6-rpms
+#              basearch: x86_64
       composite_content_views:
         composite-rhel7:
           content_views:
@@ -88,14 +105,23 @@ satellite:
       content_views:
         - name: cv-server-rhel7
           repos:
-            - label: rhel-7-server-rpms
-              releasever: 7Server
-              basearch: x86_64
-            - label: rhel-7-server-rpms
-              releasever: 7.7
-              basearch: x86_64
-            - label: rhel-7-server-satellite-tools-6.6-rpms
-              basearch: x86_64
+            - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
+              product: "Red Hat Enterprise Linux Server"
+              releasever: "7Server"
+              basearch: "x86_64"
+            - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
+              product: "Red Hat Enterprise Linux Server"
+              basearch: "x86_64"
+#        - name: cv-server-rhel7
+#          repos:
+#            - label: rhel-7-server-rpms
+#              releasever: 7Server
+#              basearch: x86_64
+#            - label: rhel-7-server-rpms
+#              releasever: 7.7
+#              basearch: x86_64
+#            - label: rhel-7-server-satellite-tools-6.6-rpms
+#              basearch: x86_64
       composite_content_views:
         composite-rhel7:
           content_views:
