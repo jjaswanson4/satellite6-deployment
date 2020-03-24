@@ -12,7 +12,7 @@
 {% if content_view.repos is defined %}
     repositories:
 {% for repo in content_view.repos %}
-      - name: {{ repo.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + repo.basearch if repo.basearch is defined else '') + (' ' + repo.releasever if repo.releasever is defined else '') }}
+      - name: {{ repo.repo | regex_replace('\\(','') | regex_replace('\\)','') + (' ' + repo.basearch if repo.basearch is defined else '') + (' ' + (repo.releasever | string) if repo.releasever is defined else '') }}
         product: {{ repo.product }}
 {% endfor %}
 {% endif %}
