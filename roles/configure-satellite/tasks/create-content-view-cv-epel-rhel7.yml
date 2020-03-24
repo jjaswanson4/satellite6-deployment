@@ -1,0 +1,24 @@
+---
+
+- name: create content view cv-epel-rhel7
+  theforeman.foreman.katello_content_view:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ organiztion.name }}"
+    name: cv-epel-rhel7
+    repositories:
+      - name: Extra Packages for Enterprise Linux 7 Repository
+        product: Extra Packages for Enterprise Linux 7
+  delegate_to: localhost
+  register: publish_content_view
+
+- name: publish new version of cv-epel-rhel7
+  include_tasks: /home/jswanson/satellite6.6-dev-rearchitect/roles/satellite/tasks/publish-content-view.yml
+  vars:
+    content_view: cv-epel-rhel7
+  when:
+    - publish_content_view is defined
+    - publish_content_view.changed
+
