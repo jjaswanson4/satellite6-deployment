@@ -1,6 +1,6 @@
 ---
 
-- name: create custom products
+- name: "create custom products in org {{ organization.name }}"
   theforeman.foreman.katello_product:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
@@ -12,6 +12,7 @@
     sync_plan: daily
   when:
     - product.1.product is defined
+    - product.1.credential_name is defined
   loop_control:
     loop_var: product
   loop: "{{ organization.content_views | subelements('repos') }}"
