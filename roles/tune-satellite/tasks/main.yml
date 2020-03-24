@@ -1,4 +1,3 @@
 ---
 
-- import_tasks: pre-flight-tasks.yml
 - import_tasks: tune-satellite.yml
