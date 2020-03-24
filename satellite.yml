@@ -7,33 +7,23 @@
 #  roles:
 #    - setup-for-satellite
 
-#- name: install satellite
-#  hosts:
-#    - satellite
-#  roles:
-#    - install-satellite
-
-#- name: tune satellite
-#  hosts:
-#    - satellite
-#  roles:
-#    - tune-satellite
-
-- name: configure satellite
+- name: set up satellite
   hosts:
     - satellite
-  gather_facts: false
   collections:
     - theforeman.foreman
   pre_tasks:
     - name: load in satellite vars
       include_vars:
         file: /home/jswanson/satellite6.6-dev-rearchitect/new-var-structure.proposed.yml
-  tasks:
-    - name: build satellite by organization
-      include_role:
-        name: satellite
-      loop_control:
-        loop_var: organization
-      loop: "{{ satellite.organizations }}"
+  roles:
+    - install-satellite
+#    - tune-satellite
+#  tasks:
+#    - name: build satellite by organization
+#      include_role:
+#        name: configure-satellite
+#      loop_control:
+#        loop_var: organization
+#      loop: "{{ satellite.organizations }}"
 
