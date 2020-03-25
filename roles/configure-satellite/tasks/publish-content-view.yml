@@ -10,4 +10,8 @@
     content_view: "{{ content_view }}"
     lifecycle_environments:
       - Library
+  register: content_view_publish
   delegate_to: "{{ delegate_host }}"
+
+- debug:
+    msg: "{{ content_view_publish }}"
