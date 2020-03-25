@@ -1,0 +1,6 @@
+---
+
+- import_tasks: organizations.yml
+- import_tasks: locations.yml
+- import_tasks: domains.yml
+- import_tasks: subnets.yml
