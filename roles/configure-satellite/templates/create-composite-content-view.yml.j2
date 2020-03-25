@@ -1,21 +1,20 @@
 ---
 
-- name: create composite content view {{ composite_content_view.key }}
-  theforeman.foreman.katello_content_view:
-{% raw %}
+- name: create composite content view {{ composite_content_view.name }}
+  theforeman.foreman.katello_content_view:{% raw %}
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
-{% endraw %}
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
-    name: "{{ composite_content_view.key }}"
+    organization: "{{ organization.name }}"
+{% endraw %}
+    name: {{ composite_content_view.name }}
     composite: true
     components:
-{% for content_view in composite_content_view.value.content_views %}
-      - content_view: {{ content_view.content_view }}
-{% if content_view.content_view_version is defined %}
-        content_view_version: {{ content_view.content_view_version }}
+{% for component_content_view in composite_content_view.component_content_views %}
+      - content_view: {{ component_content_view.name }}
+{% if component_content_view.content_view_version is defined %}
+        content_view_version: {{ component_content_view.content_view_version }}
 {% else %}
         latest: true
 {% endif %}
@@ -23,10 +22,10 @@
   delegate_to: localhost
   register: publish_content_view
 
-- name: include tasks to publish new version of {{ composite_content_view.key }}
+- name: include tasks to publish new version of {{ composite_content_view.name }}
   include_tasks: "{{ role_path }}/tasks/publish-content-view.yml"
   vars:
-    content_view: {{ composite_content_view.key }}
+    content_view: {{ composite_content_view.name }}
   when:
     - publish_content_view is defined
     - publish_content_view.changed
