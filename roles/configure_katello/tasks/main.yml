@@ -1,0 +1,20 @@
+---
+
+#- import_tasks: create-organization.yml
+#- import_tasks: create-locations.yml
+#- import_tasks: upload-manifest.yml
+#- import_tasks: create-lifecycle-environments.yml
+#- import_tasks: enable-redhat-repos.yml
+#- import_tasks: create-content-credentials.yml
+#- import_tasks: create-sync-plan.yml
+#- import_tasks: create-custom-products.yml
+#- import_tasks: associate-redhat-products-with-sync-plan.yml
+#- import_tasks: create-repos-for-custom-products.yml
+#- include_tasks: sync-repos.yml
+#  loop: "{{ range(0, organization.repo_sync_attempts, 1) | list }}"
+#- import_tasks: create-content-view-task-files.yml
+#- import_tasks: create-composite-content-view-task-files.yml
+#- import_tasks: promote-composite-content-views.yml
+#- import_tasks: create-activation-key-task-files.yml
+#- import_tasks: create-subnets.yml
+#- import_tasks: create-domains.yml

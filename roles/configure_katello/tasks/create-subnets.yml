@@ -1,0 +1,30 @@
+---
+
+- set_fact:
+    test: []
+
+#- set_fact:
+#   test: "{{ test + [ item.name ] }}"
+#  when:
+#    - item.name in satellite | json_query('organizations[*].subnets[*].name')
+
+- debug:
+    msg: "{{ item.name }}"
+  loop: "{{ satellite | json_query('organizations[*].subnets') | list }}"
+
+- debug:
+    msg: "{{ test }}"
+
+- fail:
+
+
+- name: "create subnets in organization {{ organization.name }}"
+  theforeman.foreman.foreman_subnet:
+    username: "{{ satellite_admin_username }}"
+    password: "{{ satellite_admin_password }}"
+    validate_certs: false
+    server_url: "{{ satellite_url }}"
+    organization: "{{ organization.name }}"
+  loop_control:
+    loop_var: subnet
+  loop: "{{ organization.subnets }}"
