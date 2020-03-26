@@ -1,6 +1,6 @@
 ---
 
-- name: configure provisioning templates
+- name: configure partition templates
   theforeman.foreman.foreman_provisioning_template:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
