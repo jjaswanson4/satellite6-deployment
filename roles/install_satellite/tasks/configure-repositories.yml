@@ -5,14 +5,14 @@
     install_repos: "{{ common_repos + satellite_repos + maintenance_repos }}"
   when:
     - "'satellite' in group_names"
-    - satellite_version != 'beta'
+    - satellite.version != 'beta'
 
 - name: set repos for satellite beta
   set_fact:
     install_repos: "{{ common_repos + satellite_beta_repos + maintenance_beta_repos }}"
   when:
     - "'satellite' in group_names"
-    - satellite_version == 'beta'
+    - satellite.version == 'beta'
 
 - name: set repos for capsules
   set_fact:
