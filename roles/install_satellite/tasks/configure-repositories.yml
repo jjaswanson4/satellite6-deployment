@@ -1,6 +1,6 @@
 ---
 
-- name: set repos for satellite version "{{ satellite_version }}"
+- name: set repos for satellite version "{{ satellite.version }}"
   set_fact:
     install_repos: "{{ common_repos + satellite_repos + maintenance_repos }}"
   when:
