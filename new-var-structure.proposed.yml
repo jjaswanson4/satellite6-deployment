@@ -1,29 +1,106 @@
 ---
-common_install_repos:
-  - rhel-7-server-rpms
-  - rhel-server-rhscl-7-rpms
-  - rhel-7-server-satellite-maintenance-6-rpms
-  - rhel-7-server-ansible-2.8-rpms
-satellite_repos:
-  - rhel-7-server-satellite-6.6-rpms
-capsule_repos:
-  - rhel-7-server-satellite-capsule-6.6-rpms
-install_repos: []
-satellite_conflicting_rpms: gofer,python-pulp-agent-lib,python-gofer-proton,pulp-rpm-handlers
+
+#satellite_version: 6.7
+satellite_version: beta
+
+# build in 'all' setting for locations/organizations
 
 satellite:
-  foreman_settings:
-    - name: default_download_policy
-      value: immediate
-    - name: default_proxy_download_policy
-      value: immediate
-    - name: unregister_delete_host
-      value: true
-  organizations:
-    - name: general
+  foreman:
+    capsules:
+    organizations:
+      - name: general
+      - name: josh
+    locations:
+      - name: josh1
+        organizations:
+          - name: josh
+      - name: josh2
+        organizations:
+          - name: josh
+          - name: general
+      - name: msp-lab
+        organizations:
+          - name: general
+      - name: msp-lab2
+        organizations:
+          - name: josh
+          - name: general
+    domains:
+      - name: lab.msp.redhat.com
+        description: default dns domain
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2
+      - name: josh.lab.msp.redhat.com
+        organizations:
+          - name: josh
+        locations:
+          - name: josh1
+          - name: josh2
+    subnets:
+      - name: msp-lab-10.15.108.0_24
+        network: 10.15.108.0
+        mask: 255.255.255.0
+        gateway: 10.15.108.254
+        dns_primary: 10.15.108.148
+        dns_secondard: 10.15.108.149
+        domains:
+          - name: lab.msp.redhat.com
+          - name: josh.lab.msp.redhat.com
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2 
+    compute_resources:
+      - name: vcenter01.lab.msp.redhat.com
+        provider: vmware
+        provider_params:
+          url: vcenter01.lab.msp.redhat.com
+          user: satellite01@vsphere.local
+          password: 'changeme'
+          datacenter: msp-lab
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2
+    compute_profiles:
+    provisioning_templates:
+    partition_tables:
+    settings:
+      - name: default_download_policy
+        value: immediate
+      - name: default_proxy_download_policy
+        value: immediate
+      - name: unregister_delete_host
+        value: true
+    tuning_config_files:
+      - name: dynflowd.j2
+        path: /etc/sysconfig/dynflowd
+      - name: httpd_limits.conf.j2
+        path: /etc/systemd/system/httpd.service.d/limits.conf
+      - name: 01-satellite-tune.conf.j2
+        path: /etc/sysctl.d/01-satellite-tune.conf
+#  organizations:
+  katello:
+    - katello_organization_name: general
       initial_organization: true
       state: present
       manifest: /tmp/manifest_satellite-building-testmanifest_20200320T193207Z.zip
+      repo_sync_attempts: 3
       locations:
         - name: msp-lab
           initial_location: true
@@ -40,55 +117,78 @@ satellite:
           description: big leagues
           prior: stage
       content_views:
-#       To create "custom" products, repos, and content credentials, use the following instead of label/basearch/releasever
-        - name: cv-epel-rhel7
+#       To create "custom" products, repos, and content credentials, define them
+        - name: cv-epel-rhel8
           repos:
-            - repo: "Extra Packages for Enterprise Linux 7 Repository"
-              repo_url: "http://download.fedoraproject.org/pub/epel/7/x86_64"
-              product: "Extra Packages for Enterprise Linux 7"
-              content_credential: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7"
-              content_credential_name: "cc-epel7"
-#        - name: cv-ansible-rhel7
-#          description: ansible on RHEL7
-#          repos:
-#            - label: rhel-7-server-ansible-2.8-rpms
-#              basearch: x86_64
-#            - label: rhel-7-server-ansible-2-rpms
-#              basearch: x86_64
-        - name: cv-server-rhel7
+          - repo: Extra Packages for Enterprise Linux 8 Repository
+            repo_url: http://download.fedoraproject.org/pub/epel/8/Everything/x86_64
+            product: Extra Packages for Enterprise Linux 8
+            content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+            content_credential_name: cc-epel8
+        - name: cv-ansible-rhel8
+          description: ansible on RHEL8
           repos:
-            - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
-              product: "Red Hat Enterprise Linux Server"
-              releasever: "7Server"
-              basearch: "x86_64"
-            - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
-              product: "Red Hat Enterprise Linux Server"
-              basearch: "x86_64"
-#
-#
-#            - label: rhel-7-server-rpms
-#              releasever: 7Server
-#              basearch: x86_64
-#            - label: rhel-7-server-rpms
-#              releasever: '7.7'
-#              basearch: x86_64
-#            - label: rhel-7-server-satellite-tools-6.6-rpms
-#              basearch: x86_64
+            - repo: Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+            - repo: Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+        - name: cv-appstream-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+        - name: cv-server-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+            - repo: Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              content_view: cv-server-rhel8
+        - name: cv-supplementary-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+        - name: cv-kickstart-rhel8.1
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (Kickstart)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8.1
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (Kickstart)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8.1
       composite_content_views:
-        composite-rhel7:
-          content_views:
-            - cv-ansible-rhel7
-            - cv-server-rhel7
-        composite-rhel8:
-            - cv-server-rhel8
-            - cv-ansible-rhel8
+        - name: composite-rhel8
+          description: rhel 8 packages
+          auto_publish: false
+          component_content_views:
+#             If a specific content view version is desired, then define 'content_view_version', otherwise latest is used
+            - name: cv-server-rhel8
+            - name: cv-ansible-rhel8
+            - name: cv-appstream-rhel8
+            - name: cv-supplementary-rhel8
+            - name: cv-kickstart-rhel8.1
       activation_keys:
-        ak_rhel7:
-          subscriptions:
-            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
-    - name: josh
+        - name: ak-rhel8-prod
+          lifecycle_environment: prod
+          content_view: composite-rhel8
+#          subscriptions:
+#            - subscription_name: Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
+#          auto_attach: false
+#          release_version: 8
+#          service_level: Standard
+      subnets:
+        - name: test1_subnet
+          description: test
+        - name: test2_subnet
+          description: test
+        - name: test3_subnet
+          description: test
+    - katello_organization_name: josh
       state: present
       manifest: /tmp/manifest_satellite-building-testmanifest2_20200320T204013Z.zip
+      repo_sync_attempts: 3
       locations:
         - name: josh1
         - name: josh2
@@ -103,34 +203,56 @@ satellite:
           description: big leagues
           prior: QA
       content_views:
-        - name: cv-server-rhel7
+        - name: cv-ansible-rhel8
+          description: ansible on RHEL8
           repos:
-            - repo: "Red Hat Enterprise Linux 7 Server (RPMs)"
-              product: "Red Hat Enterprise Linux Server"
-              releasever: "7Server"
-              basearch: "x86_64"
-            - repo: "Red Hat Satellite Tools 6.6 (for RHEL 7 Server) (RPMs)"
-              product: "Red Hat Enterprise Linux Server"
-              basearch: "x86_64"
-#        - name: cv-server-rhel7
-#          repos:
-#            - label: rhel-7-server-rpms
-#              releasever: 7Server
-#              basearch: x86_64
-#            - label: rhel-7-server-rpms
-#              releasever: 7.7
-#              basearch: x86_64
-#            - label: rhel-7-server-satellite-tools-6.6-rpms
-#              basearch: x86_64
+            - repo: Red Hat Ansible Engine 2 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+            - repo: Red Hat Ansible Engine 2.8 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Ansible Engine
+        - name: cv-appstream-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+        - name: cv-server-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+            - repo: Red Hat Satellite Tools 6.6 for RHEL 8 x86_64 (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              content_view: cv-server-rhel8
+        - name: cv-supplementary-rhel8
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - Supplementary (RPMs)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8
+        - name: cv-kickstart-rhel8.1
+          repos:
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - BaseOS (Kickstart)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8.1
+            - repo: Red Hat Enterprise Linux 8 for x86_64 - AppStream (Kickstart)
+              product: Red Hat Enterprise Linux for x86_64
+              releasever: 8.1
       composite_content_views:
-        composite-rhel7:
-          content_views:
-            - cv-ansible-rhel7
-            - cv-server-rhel7
-        composite-rhel8:
-            - cv-server-rhel8
-            - cv-ansible-rhel8
+        - name: composite-rhel8
+          description: rhel 8 packages
+          auto_publish: false
+          component_content_views:
+#             If a specific content view version is desired, then define 'content_view_version', otherwise latest is used
+            - name: cv-server-rhel8
+            - name: cv-ansible-rhel8
+            - name: cv-appstream-rhel8
+            - name: cv-supplementary-rhel8
+            - name: cv-kickstart-rhel8.1
       activation_keys:
         ak_rhel7:
           subscriptions:
             - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
+      subnets:
+        - name: test1_subnet
+          description: test
+        - name: test2_subnet
+          description: test
