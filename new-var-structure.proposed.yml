@@ -1,12 +1,16 @@
 ---
 
-#satellite_version: 6.7
-satellite_version: beta
-
 # build in 'all' setting for locations/organizations
 
 satellite:
   version: beta
+  tuning_config_files:
+    - name: dynflowd.j2
+      path: /etc/sysconfig/dynflowd
+    - name: httpd_limits.conf.j2
+      path: /etc/systemd/system/httpd.service.d/limits.conf
+    - name: 01-satellite-tune.conf.j2
+      path: /etc/sysctl.d/01-satellite-tune.conf
   foreman:
     capsules:
     organizations:
