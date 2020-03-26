@@ -1,8 +1,6 @@
 ---
 
-#- import_tasks: create-organization.yml
-#- import_tasks: create-locations.yml
-#- import_tasks: upload-manifest.yml
+- import_tasks: upload-manifest.yml
 #- import_tasks: create-lifecycle-environments.yml
 #- import_tasks: enable-redhat-repos.yml
 #- import_tasks: create-content-credentials.yml
@@ -16,5 +14,3 @@
 #- import_tasks: create-composite-content-view-task-files.yml
 #- import_tasks: promote-composite-content-views.yml
 #- import_tasks: create-activation-key-task-files.yml
-#- import_tasks: create-subnets.yml
-#- import_tasks: create-domains.yml
