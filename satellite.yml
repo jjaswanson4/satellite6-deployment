@@ -17,13 +17,19 @@
       include_vars:
         file: /home/jswanson/satellite6.6-dev-rearchitect/new-var-structure.proposed.yml
   roles:
-    - install-satellite
-#    - tune-satellite
-#  tasks:
-#    - name: build satellite by organization
-#      include_role:
-#        name: configure-satellite
-#      loop_control:
-#        loop_var: organization
-#      loop: "{{ satellite.organizations }}"
-
+    - install_satellite
+    - tune_satellite
+  tasks:
+#     NOTE: operating systems are set up when repositories are synced, so do everything but that initially
+    - name: set up all foreman settings but skip operating systems
+      include_role:
+        name: configure_foreman
+        tasks_from: main-minus-operating-system.yml
+    - name: build satellite by organization
+      include_role:
+        name: configure-satellite
+      loop_control:
+        loop_var: organization
+      loop: "{{ satellite.organizations }}"
+#  post_tasks:
+#    - name: configure OSes
