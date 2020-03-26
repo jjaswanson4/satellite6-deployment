@@ -6,10 +6,12 @@ satellite_version: beta
 # build in 'all' setting for locations/organizations
 
 satellite:
+  version: beta
   foreman:
     capsules:
     organizations:
       - name: general
+        initial_organization: true
       - name: josh
     locations:
       - name: josh1
@@ -20,6 +22,7 @@ satellite:
           - name: josh
           - name: general
       - name: msp-lab
+        initial_location: true
         organizations:
           - name: general
       - name: msp-lab2
@@ -130,6 +133,26 @@ satellite:
           - josh1
           - josh2  
     partition_tables:
+      - name: RHEL7 Kickstart Partition Table
+        file: /tmp/rhel7_kickstart_partition_table.erb
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2
+      - name: RHEL8 Kickstart Partition Table
+        file: /tmp/rhel8_kickstart_partition_table.erb
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2
     settings:
       - name: default_download_policy
         value: immediate
@@ -146,15 +169,11 @@ satellite:
         path: /etc/sysctl.d/01-satellite-tune.conf
 #  organizations:
   katello:
-    - katello_organization_name: general
+    - organization_name: general
       initial_organization: true
       state: present
       manifest: /tmp/manifest_satellite-building-testmanifest_20200320T193207Z.zip
       repo_sync_attempts: 3
-      locations:
-        - name: msp-lab
-          initial_location: true
-        - name: msp-lab-2
 #     Maybe tweak for more clear handling of multiple lifecycle environment paths?
       lifecycle_environments:
         - name: test
@@ -228,20 +247,10 @@ satellite:
 #          auto_attach: false
 #          release_version: 8
 #          service_level: Standard
-      subnets:
-        - name: test1_subnet
-          description: test
-        - name: test2_subnet
-          description: test
-        - name: test3_subnet
-          description: test
-    - katello_organization_name: josh
+    - organization_name: josh
       state: present
       manifest: /tmp/manifest_satellite-building-testmanifest2_20200320T204013Z.zip
       repo_sync_attempts: 3
-      locations:
-        - name: josh1
-        - name: josh2
       lifecycle_environments:
         - name: dev
           description: dev land
@@ -301,8 +310,3 @@ satellite:
         ak_rhel7:
           subscriptions:
             - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
-      subnets:
-        - name: test1_subnet
-          description: test
-        - name: test2_subnet
-          description: test
