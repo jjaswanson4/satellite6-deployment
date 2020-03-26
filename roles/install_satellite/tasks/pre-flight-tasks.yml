@@ -1,6 +1,0 @@
----
-
-- name: grab vars from the main role
-  include_vars:
-#    file: "{{ role_path | regex_replace('install-satellite$','satellite') }}/vars/{{ inventory_hostname }}.vars.yml"
-    file: /home/jswanson/satellite6.6-dev-rearchitect/new-var-structure.proposed.yml
