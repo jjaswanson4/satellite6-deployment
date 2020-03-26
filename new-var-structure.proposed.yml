@@ -67,7 +67,7 @@ satellite:
         provider_params:
           url: vcenter01.lab.msp.redhat.com
           user: satellite01@vsphere.local
-          password: 'changeme'
+          password: "{{ lookup('file', '/tmp/vcenter-password') }}"
           datacenter: msp-lab
         organizations:
           - name: general
@@ -78,7 +78,57 @@ satellite:
           - josh1
           - josh2
     compute_profiles:
+      - name: general-vm
+        compute_resource: vcenter01.lab.msp.redhat.com
+        vm_attrs:
+          cpus: 2
+          corespersocket: 2
+          memory_mb: 2048
+          firmware: bios
+          cluster: general
+          resource_pool: Resources
+          path: /Datacenters/msp-lab/vm
+          guest_id: rhel7_64Guest
+          hardware_version: vmx-13
+          memoryHotAddEnabled: 1
+          cpuHotAddEnabled: 1
+          add_cdrom: 0
+          scsi_controllers:
+           - type: ParaVirtualSCSIController
+             key: 1000
+          interface_attributes:
+            0:
+              type: VirtualVmxnet3
+              network: virtaul-machines
+          volumes_attributes:
+            0:
+              thin: true
+              name: Hard disk
+              mode: persistent
+              controller_key: 1000
+              size_gb: 100
+              datastore: storage01-iscsi-lun0
     provisioning_templates:
+      - name: kickstart-rhel
+        file: /tmp/kickstartrhel.erb
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2
+      - name: register-rhel
+        file: /tmp/registerrhel.erb
+        organizations:
+          - name: general
+          - name: josh
+        locations:
+          - msp-lab
+          - msp-lab2
+          - josh1
+          - josh2  
     partition_tables:
     settings:
       - name: default_download_policy
