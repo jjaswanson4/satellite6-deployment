@@ -1,7 +1,7 @@
 ---
 
 - name: grab all products to sync
-  shell: hammer --csv repository list --organization "{{ organization.name }}" | cut -d ',' -f 3 | sort --unique | grep -v '^Product$'
+  shell: hammer --csv repository list --organization "{{ organization.organization_name }}" | cut -d ',' -f 3 | sort --unique | grep -v '^Product$'
   register: all_products
   changed_when: false
   check_mode: false
@@ -12,7 +12,7 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ organization.name }}"
+    organization: "{{ organization.organization_name }}"
     product: "{{ product }}"
   loop_control:
     loop_var: product
