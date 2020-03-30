@@ -1,17 +1,14 @@
 ---
 
-- name: "publish content view version {{ content_view }} to the library"
+- name: publish content view version to the library
   theforeman.foreman.katello_content_view_version:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ organization.name }}"
+    organization: "{{ organization.organization_name }}"
     content_view: "{{ content_view }}"
     lifecycle_environments:
       - Library
   register: content_view_publish
   delegate_to: "{{ delegate_host }}"
-
-- debug:
-    msg: "{{ content_view_publish }}"
