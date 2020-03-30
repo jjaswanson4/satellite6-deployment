@@ -38,12 +38,14 @@
   register: disk_space
   changed_when: false
   check_mode: false
+  tags: [ storage ]
 
 - name: check disk space
   fail:
     msg: "{{ ansible_facts['lvm']['lvs']['var']['vg'] }} does not have enough space"
   when:
     - disk_space.stdout | int < 1500
+  tags: [ storage ]
 
 - name: get current umask
   shell: umask

@@ -4,18 +4,21 @@
   hosts:
     - satellite
     - capsule
+  tags: [ setup ]
   roles:
     - setup-for-satellite
 
 - name: install satellite
   hosts:
     - satellite
+  tags: [ install ]
   roles:
     - install-satellite
 
 - name: tune satellite
   hosts:
     - satellite
+  tags: [ tune ]
   roles:
     - tune-satellite
 
@@ -27,3 +30,9 @@
   roles:
     - satellite
 
+- name: install capsule(s)
+  hosts:
+    - capsule
+  tags: [ capsule ]
+  roles:
+    - install-capsule
