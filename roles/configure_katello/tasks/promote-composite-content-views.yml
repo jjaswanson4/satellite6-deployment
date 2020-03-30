@@ -14,7 +14,7 @@
   set_fact:
     organization_id: "{{ item.id }}"
   when:
-    - item.name == organization.name
+    - item.name == organization.organization_name
   loop: "{{ organizations_info.resources }}"
 
 - name: get info about the composite content views
@@ -47,7 +47,7 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ organization.name }}"
+    organization: "{{ organization.organization_name }}"
     content_view: "{{ composite_content_view.name }}"
     current_lifecycle_environment: Library
     lifecycle_environments: "{{ organization | json_query('lifecycle_environments[*].name') | list }}"
