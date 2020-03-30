@@ -10,7 +10,7 @@
   fail:
     msg: "Satellite requires at least 4 cpu cores"
   when:
-    - ansible_facts['processor_count'] | int * ansible_facts['processor_count'] | int < 4
+    - ansible_facts['processor_count'] | int < 4
 
 - name: check memory
   fail:
