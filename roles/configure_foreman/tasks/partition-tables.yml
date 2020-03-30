@@ -1,17 +1,17 @@
 ---
 
 - name: configure partition templates
-  theforeman.foreman.foreman_provisioning_template:
+  theforeman.foreman.foreman_ptable:
     username: "{{ satellite_admin_username }}"
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    name: "{{ provisioning_template.name }}"
-    state: "{{ provisioning_template.state | default(omit) }}"
-    file_name: "{{ provisioning_template.file }}"
-    organizations: "{{ provisioning_template | json_query('organizations[*].name') | list }}"
-    locations: "{{ provisioning_template | json_query('locations[*].name') | list }}"
+    name: "{{ partition_table.name }}"
+    state: "{{ partition_table.state | default(omit) }}"
+    file_name: "{{ partition_table.file }}"
+    organizations: "{{ partition_table | json_query('organizations[*].name') | list }}"
+    locations: "{{ partition_table | json_query('locations[*].name') | list }}"
   loop_control:
-    loop_var: provisioning_template
-  loop: "{{ satellite.foreman.provisioning_templates }}"
+    loop_var: partition_table
+  loop: "{{ satellite.foreman.partition_tables }}"
   delegate_to: "{{ delegate_host }}"
