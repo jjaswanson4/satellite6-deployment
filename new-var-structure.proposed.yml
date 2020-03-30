@@ -64,10 +64,10 @@ satellite:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2 
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2 
     compute_resources:
       - name: vcenter01.lab.msp.redhat.com
         provider: vmware
@@ -80,10 +80,10 @@ satellite:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2
     compute_profiles:
       - name: general-vm
         compute_resource: vcenter01.lab.msp.redhat.com
@@ -122,20 +122,20 @@ satellite:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2
       - name: register-rhel
         file: /tmp/registerrhel.erb
         organizations:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2  
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2  
     partition_tables:
       - name: RHEL7 Kickstart Partition Table
         file: /tmp/rhel7_kickstart_partition_table.erb
@@ -143,20 +143,20 @@ satellite:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2
       - name: RHEL8 Kickstart Partition Table
         file: /tmp/rhel8_kickstart_partition_table.erb
         organizations:
           - name: general
           - name: josh
         locations:
-          - msp-lab
-          - msp-lab2
-          - josh1
-          - josh2
+          - name: msp-lab
+          - name: msp-lab2
+          - name: josh1
+          - name: josh2
     settings:
       - name: default_download_policy
         value: immediate
@@ -193,11 +193,16 @@ satellite:
 #       To create "custom" products, repos, and content credentials, define them
         - name: cv-epel-rhel8
           repos:
-          - repo: Extra Packages for Enterprise Linux 8 Repository
-            repo_url: http://download.fedoraproject.org/pub/epel/8/Everything/x86_64
-            product: Extra Packages for Enterprise Linux 8
-            content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
-            content_credential_name: cc-epel8
+            - repo: Extra Packages for Enterprise Linux 8 Repository
+              repo_url: http://download.fedoraproject.org/pub/epel/8/Everything/x86_64
+              product: Extra Packages for Enterprise Linux 8
+              content_credential: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+              content_credential_name: cc-epel8
+          filters:
+            - name: include htop from epel8
+              filter_type: rpm
+              package_name: htop
+              inclusion: true
         - name: cv-ansible-rhel8
           description: ansible on RHEL8
           repos:
@@ -243,14 +248,17 @@ satellite:
             - name: cv-supplementary-rhel8
             - name: cv-kickstart-rhel8.1
       activation_keys:
+        - name: ak-virtual
+        - name: ak-physical
+          subscriptions:
+            - subscription_name: Red Hat Enterprise Linux Server with Smart Management, Premium (Physical or Virtual Nodes)
+        - name: ak-epel8
+          subscriptions:
+            - subscription_name: Extra Packages for Enterprise Linux 8
         - name: ak-rhel8-prod
           lifecycle_environment: prod
           content_view: composite-rhel8
-#          subscriptions:
-#            - subscription_name: Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
-#          auto_attach: false
-#          release_version: 8
-#          service_level: Standard
+          release_version: 8
     - organization_name: josh
       state: present
       manifest: /tmp/manifest_satellite-building-testmanifest2_20200320T204013Z.zip
@@ -311,6 +319,6 @@ satellite:
             - name: cv-supplementary-rhel8
             - name: cv-kickstart-rhel8.1
       activation_keys:
-        ak_rhel7:
-          subscriptions:
-            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
+#        ak_rhel7:
+#          subscriptions:
+#            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
