@@ -11,20 +11,21 @@
 - name: install satellite
   hosts:
     - satellite
-  tags: [ install ]
+  tags: [ install, satellite ]
   roles:
     - install-satellite
 
 - name: tune satellite
   hosts:
     - satellite
-  tags: [ tune ]
+  tags: [ tune, satellite ]
   roles:
     - tune-satellite
 
 - name: configure satellite
   hosts:
     - satellite
+  tags: [ configure, satellite ]
   collections:
     - theforeman.foreman
   roles:
