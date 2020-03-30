@@ -6,10 +6,11 @@
     password: "{{ satellite_admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ organization.name }}"
+    organization: "{{ organization.organization_name }}"
 {% endraw %}
     name: {{ activation_key.name }}
     lifecycle_environment: {{ activation_key.lifecycle_environment | default('Library') }}
+    content_view: {{ activation_key.content_view | default('Default Organization View') }}
 {% if activation_key.host_collections is defined %}
     host_collections:
 {% for host_collection in activation_key.host_collections %}
