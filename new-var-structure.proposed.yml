@@ -319,6 +319,11 @@ satellite:
             - name: cv-supplementary-rhel8
             - name: cv-kickstart-rhel8.1
       activation_keys:
-#        ak_rhel7:
-#          subscriptions:
-#            - Red Hat Enterprise Linux, Premium (One Year, Enterprise Program)
+        - name: ak-virtual
+        - name: ak-physical
+          subscriptions:
+            - subscription_name: Red Hat Enterprise Linux Server with Smart Management, Premium (Physical or Virtual Nodes)
+        - name: ak-rhel8-prod
+          lifecycle_environment: prod
+          content_view: composite-rhel8
+          release_version: 8
