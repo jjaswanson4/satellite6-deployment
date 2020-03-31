@@ -1,11 +1,7 @@
 ---
 
-- name: grab vars from the main role
-  include_vars:
-    file: "{{ role_path | regex_replace('setup-for-satellite$','satellite') }}/vars/{{ inventory_hostname }}.vars.yml"
-
-#- name: "setup {{ delegate_host }} to use foreman ansible modules"
-#  block:
+- name: "setup {{ delegate_host }} to use foreman ansible modules"
+  block:
 #    - name: install pip from epel
 #      yum:
 #        name: https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/python2-pip-8.1.2-10.el7.noarch.rpm
@@ -17,8 +13,10 @@
 #        msg: "im_ok_with_pip_from_epel is set to false and SCL pip code is not ready."
 #      when:
 #        - not im_ok_with_pip_from_epel
-#    - name: install apypie via pip
-#      pip:
-#        name: apypie
-#       state: present
-#  delegate_to: "{{ delegate_host }}"
+    - name: install apypie via pip
+      pip:
+        name: apypie
+        state: present
+        executable: pip3
+        become: true
+  delegate_to: "{{ delegate_host }}"
