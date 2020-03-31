@@ -1,2 +1,15 @@
+[all]
+satellite67.josh.lab.msp.redhat.com
+capsule67-01.josh.lab.msp.redhat.com
+capsule67-02.josh.lab.msp.redhat.com
+
+[all:vars]
+ansible_user=root
+delegate_host=localhost
+
 [satellite]
-satellite01
+satellite67.josh.lab.msp.redhat.com
+
+[capsule]
+capsule67-01.josh.lab.msp.redhat.com
+capsule67-02.josh.lab.msp.redhat.com
