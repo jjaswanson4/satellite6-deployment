@@ -18,5 +18,5 @@
         name: apypie
         state: present
         executable: pip3
-        become: true
+#      become: true
   delegate_to: "{{ delegate_host }}"
