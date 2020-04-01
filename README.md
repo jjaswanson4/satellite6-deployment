@@ -4,6 +4,11 @@
 
 This playbook converts a standard RHEL server into a satellite server. It handles mount points, tuning, packages, repos, and configurations. 
 
+Update 04/01/2020:
+- At this point, the satellite code is mostly stable
+- Foreman and Katello settings have been broken out into different roles
+- The capsule code is included, but will probably not run
+
 Update 03/20/2020:
 - Rearchitect vars structure
 
