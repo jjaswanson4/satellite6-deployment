@@ -4,14 +4,14 @@
   shell: >-
     satellite-installer
     --scenario capsule
-    --foreman-proxy-content-parent-fqdn "https://{{ capsule.parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --foreman-proxy-content-parent-fqdn "https://{{ capsule.parent_satellite }}"
     --foreman-proxy-register-in-foreman "true"
-    --foreman-proxy-foreman-base-url "https://{{ capsule.parent_satellite }}.{{ ansible_facts['domain'] }}"
-    --foreman-proxy-trusted-hosts "{{ capsule.parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --foreman-proxy-foreman-base-url "https://{{ capsule.parent_satellite }}"
+    --foreman-proxy-trusted-hosts "{{ capsule.parent_satellite }}"
     --foreman-proxy-trusted-hosts "{{ ansible_fqdn }}"
     --foreman-proxy-oauth-consumer-key "{{ foreman_proxy_oauth_consumer_key }}"
     --foreman-proxy-oauth-consumer-secret "{{ foreman_proxy_oauth_consumer_secret }}"
-    --puppet-server-foreman-url "https://{{ capsule.parent_satellite }}.{{ ansible_facts['domain'] }}"
+    --puppet-server-foreman-url "https://{{ capsule.parent_satellite }}"
     --certs-cname "{{ capsule.dns_record }}"
     --puppet-dns-alt-names "{{ capsule.dns_record }}"
     --puppet-ca-server "{{ ansible_fqdn }}"
