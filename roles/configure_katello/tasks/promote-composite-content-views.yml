@@ -2,8 +2,8 @@
 
 - name: match organization to organization_id
   theforeman.foreman.foreman_search_facts:
-    username: "{{ satellite_admin_username }}"
-    password: "{{ satellite_admin_password }}"
+    username: "{{ satellite.admin_username }}"
+    password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     resource: organizations
@@ -19,8 +19,8 @@
 
 - name: get info about the composite content views
   theforeman.foreman.foreman_search_facts:
-    username: "{{ satellite_admin_username }}"
-    password: "{{ satellite_admin_password }}"
+    username: "{{ satellite.admin_username }}"
+    password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     resource: content_views
@@ -43,8 +43,8 @@
 
 - name: promote version 1.0 of a composite content view through the lifecycle environments
   theforeman.foreman.katello_content_view_version:
-    username: "{{ satellite_admin_username }}"
-    password: "{{ satellite_admin_password }}"
+    username: "{{ satellite.admin_username }}"
+    password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     organization: "{{ organization.organization_name }}"
