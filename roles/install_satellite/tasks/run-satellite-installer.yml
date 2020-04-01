@@ -30,8 +30,8 @@
 - name: run the satellite installer
   shell: >-
     satellite-installer --scenario satellite
-    --foreman-initial-admin-username '{{ satellite_admin_username }}'
-    --foreman-initial-admin-password '{{ satellite_admin_password }}'
+    --foreman-initial-admin-username '{{ satellite.admin_username }}'
+    --foreman-initial-admin-password '{{ satellite.admin_password }}'
   register: satellite_installer_output
   when:
     - "'Failed to open TCP connection' in hammer_output.stderr"
