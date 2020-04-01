@@ -1,5 +1,17 @@
 ---
 
+- name: set repos for capsule version "{{ capsule.version }}"
+  set_fact:
+    install_repos: "{{ common_repos + capsule_repos + maintenance_repos }}"
+  when:
+    - capsule.version != 'beta'
+
+- name: set repos for capsule beta
+  set_fact:
+    install_repos: "{{ common_repos + capsule_beta_repos + maintenance_beta_repos }}"
+  when:
+    - capsule.version == 'beta'
+
 - name: enable install repos
   rhsm_repository:
     name: "{{ repo }}"
@@ -7,7 +19,7 @@
   loop_control:
     loop_var: repo
   loop:
-    - "{{ common_install_repos + capsule_repos }}"
+    - "{{ install_repos }}"
 
 - name: get other enabled repos
   shell: subscription-manager repos --list-enabled | grep 'Repo ID' | awk '{print $3}'
@@ -20,8 +32,7 @@
     name: "{{ repo }}"
     state: disabled
   when:
-    - repo not in common_install_repos
-    - repo not in capsule_repos
+    - repo not in install_repos
   loop_control:
     loop_var: repo
   with_items:
