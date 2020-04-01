@@ -1,5 +1,17 @@
 ---
 
+- name: map list of logical volumes for satellite
+  set_fact:
+    logical_volumes: "{{ satellite.logical_volumes }}"
+  when:
+    - "'satellite' in group_names"
+
+- name: map list of logical volumes for capsule
+  set_fact:
+    logical_volumes: "{{ capsule.logical_volumes }}"
+  when:
+    - "'capsule' in group_names"
+
 - name: create satellite logical volumes
   lvol:
     lv: "{{ logical_volume.name }}"
@@ -8,7 +20,7 @@
     shrink: false
   loop_control:
     loop_var: logical_volume
-  loop: "{{ satellite.logical_volumes }}"
+  loop: "{{ logical_volumes }}"
 
 - name: create filesystem on satellite logical volumes
   filesystem:
@@ -17,7 +29,7 @@
     resizefs: true
   loop_control:
     loop_var: logical_volume
-  loop: "{{ satellite.logical_volumes }}"
+  loop: "{{ logical_volumes }}"
 
 - name: put mounts into /etc/fstab
   mount:
@@ -27,4 +39,4 @@
     state: mounted
   loop_control:
     loop_var: logical_volume
-  loop: "{{ satellite.logical_volumes }}"
+  loop: "{{ logical_volumes }}"
