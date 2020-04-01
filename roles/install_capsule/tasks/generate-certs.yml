@@ -5,16 +5,18 @@
     path: "/root/capsule-certificates/{{ inventory_hostname }}"
     state: directory
   register: generate_certs
-  delegate_to: "{{ parent_satellite }}"
+  delegate_to: "{{ capsule.parent_satellite }}"
+  throttle: 1
 
 - name: generate capsule certificates
   shell: >-
     capsule-certs-generate
     --foreman-proxy-fqdn "{{ ansible_fqdn }}"
     --certs-tar "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
-    --foreman-proxy-cname "{{ satellite_loadbalanced_dns }}"
+    --foreman-proxy-cname "{{ capsule.dns_record }}"
   register: cert_generate_output
-  delegate_to: "{{ parent_satellite }}"
+  delegate_to: "{{ capsule.parent_satellite }}"
+  throttle: 1
   when:
     - generate_certs.changed
 
@@ -23,7 +25,7 @@
     src: "/root/capsule-certificates/{{ inventory_hostname }}/{{ inventory_hostname }}-capsule-certs.tar"
     dest: /tmp/
     flat: yes
-  delegate_to: "{{ parent_satellite }}"
+  delegate_to: "{{ capsule.parent_satellite }}"
   when:
     - generate_certs.changed
 
