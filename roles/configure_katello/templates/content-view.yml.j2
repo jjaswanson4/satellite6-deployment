@@ -73,8 +73,10 @@
     version: {{ content_view_filter.version }}
 {% endif %}
     content_view: {{ content_view.name }}
-    name: {{ content_view_filter.name }}{% raw %}
+    name: {{ content_view_filter.name }}
+    package_name: {{ content_view_filter.package_name }}{% raw %}
   delegate_to: "{{ delegate_host }}"
+  register: content_view_filter
 {% endraw %}
 {% endfor %}
 {% endif %}
@@ -83,13 +85,11 @@
   set_fact:
     current_content_view: {{ content_view.name }}
   when:
-    - publish_content_view is defined
-    - publish_content_view.changed
+    - (publish_content_view is defined and publish_content_view.changed) or (content_view_filter is defined and content_view_filter.changed)
 
 - name: publish new version of the content view{% raw %}
   include_tasks: "{{ role_path }}/tasks/publish-content-view.yml"
   vars:
     content_view: "{{ current_content_view }}"
   when:
-    - publish_content_view is defined
-    - publish_content_view.changed{% endraw %}
+    - (publish_content_view is defined and publish_content_view.changed) or (content_view_filter is defined and content_view_filter.changed){% endraw %}
