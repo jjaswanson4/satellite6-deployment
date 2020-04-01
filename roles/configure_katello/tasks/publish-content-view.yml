@@ -6,7 +6,7 @@
     password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
-    organization: "{{ satellite_initial_organization }}"
+    organization: "{{ organization.organization_name }}"
     content_view: "{{ content_view }}"
     lifecycle_environments:
       - Library
