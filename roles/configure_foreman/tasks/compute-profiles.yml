@@ -2,8 +2,8 @@
 
 - name: configure compute_profiles
   theforeman.foreman.foreman_compute_profile:
-    username: "{{ satellite_admin_username }}"
-    password: "{{ satellite_admin_password }}"
+    username: "{{ satellite.admin_username }}"
+    password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     name: "{{ compute_profile.name }}"

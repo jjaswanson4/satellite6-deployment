@@ -2,8 +2,8 @@
 
 - name: configure partition templates
   theforeman.foreman.foreman_ptable:
-    username: "{{ satellite_admin_username }}"
-    password: "{{ satellite_admin_password }}"
+    username: "{{ satellite.admin_username }}"
+    password: "{{ satellite.admin_password }}"
     validate_certs: false
     server_url: "{{ satellite_url }}"
     name: "{{ partition_table.name }}"
