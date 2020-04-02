@@ -1,0 +1,17 @@
+---
+
+- name: get current capsule locations
+  shell: hammer --csv capsule info --name "{{ inventory_hostname }}" --fields Locations | grep -v ^Locations
+  register: capsule_locations
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+  check_mode: false
+  delegate_to: "{{ capsule.parent_satellite }}"
+
+- name: set capsule locations
+  shell: hammer capsule update --name "{{ inventory_hostname }}" --locations "{{ capsule | json_query('locations[*].name') | list | sort | join(',') }}"
+  changed_when:
+    - capsule | json_query('locations[*].name') | list | sort | join(',') != capsule_locations.stdout
+  delegate_to: "{{ capsule.parent_satellite }}"
+#  notify: sync_capsule
