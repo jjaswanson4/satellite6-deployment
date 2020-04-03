@@ -1,0 +1,61 @@
+---
+
+capsule:
+  parent_satellite: satellite67.josh.lab.msp.redhat.com
+  dns_record: satellite67beta-lb.josh.lab.msp.redhat.com
+  version: beta
+  logical_volumes:
+    - name: cache
+      size: 20
+      path: /var/cache/pulp
+    - name: pulp
+      size: 300
+      path: /var/lib/pulp
+    - name: mongodb
+      size: 50
+      path: /var/lib/mongodb
+    - name: qpidd
+      size: 20
+      path: /var/lib/qpidd
+    - name: varlog
+      size: 10
+      path: /var/log
+    - name: pqsql
+      size: 25
+      path: /var/lib/pgsql
+    - name: squid
+      size: 10
+      path: /var/spool/squid
+    - name: usr
+      size: 8
+      path: /usr
+    - name: opt
+      size: 8
+      path: /opt
+    - name: puppetlabs
+      size: 1
+      path: /opt/puppetlabs
+    - name: var
+      size: 12
+      path: /var
+  organizations:
+    - name: general
+    - name: josh
+  locations:
+    - name: msp-lab
+    - name: msp-lab2
+    - name: josh1
+    - name: josh2
+  lifecycle_environments:
+    - name: dev
+      organization: josh
+    - name: QA
+      organization: josh
+    - name: prod
+      organization: josh
+    - name: test
+      organization: general
+    - name: stage
+      organization: general
+    - name: prod
+      organization: general
