@@ -1,7 +1,6 @@
 ---
 
-- import_tasks: pre-flight-tasks.yml
-#- import_tasks: configure-repositories.yml
-#- import_tasks: install-capsule-rpms.yml
-#- import_tasks: generate-certs.yml
-#- import_tasks: run-satellite-installer.yml
+- import_tasks: configure-repositories.yml
+- import_tasks: install-capsule-rpms.yml
+- import_tasks: generate-certs.yml
+- import_tasks: run-capsule-installer.yml
