@@ -1,8 +1,11 @@
 # Josh's Satellite 6.x Deployment Playbook
 
-##### THIS BRANCH IS NOT STABLE #####
-
 This playbook converts a standard RHEL server into a satellite server. It handles mount points, tuning, packages, repos, and configurations. 
+
+Update 04/20/2020:
+- Capsule code is now functional and supports load-balanced capsuled
+- Var structure has been re-written to be more clear/easier to consume, example var files are included
+- Upgraded to satellite 6.7
 
 Update 04/01/2020:
 - At this point, the satellite code is mostly stable
