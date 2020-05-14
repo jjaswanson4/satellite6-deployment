@@ -1,50 +1,12 @@
 ---
 
-- name: setup server to be satellite or a capsule
+- name: install satellite
   hosts:
     - satellite
-    - capsule
   pre_tasks:
     - name: load in satellite vars
       include_vars:
-        file: "/path/to/vars/file/{{ ansible_fqdn }}.vars.yml"
-  roles:
-    - setup_for_satellite
-
-- name: set up satellite
-  hosts:
-    - satellite
-  collections:
-    - theforeman.foreman
-  pre_tasks:
-    - name: load in satellite vars
-      include_vars:
-        file: "/path/to/vars/file/{{ ansible_fqdn }}.vars.yml"
+        file: "{{ satellite_vars_file }}"
   roles:
     - install_satellite
     - tune_satellite
-  tasks:
-     NOTE: operating systems are set up when repositories are synced, so do everything but that initially
-    - name: set up all foreman settings but skip operating systems
-      include_role:
-        name: configure_foreman
-        tasks_from: pre-content-sync.yml
-    - name: build satellite by organization
-      include_role:
-        name: configure_katello
-      loop_control:
-        loop_var: organization
-      loop: "{{ satellite.katello }}"
-  post_tasks:
-    - name: configure OSes
-
-- name: set up capsules
-  hosts:
-    - capsule
-  pre_tasks:
-    - name: load in satellite vars
-      include_vars:
-        file: "/path/to/vars/file/{{ ansible_fqdn }}.vars.yml"
-  roles:
-    - install_capsule
-    - configure_capsule
